@@ -4,6 +4,15 @@
 
 @section('content')
     <style>
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
         .search-bar {
             display: flex;
             flex-wrap: wrap;
@@ -13,6 +22,9 @@
             background: #fff;
             border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            width: 100%;
+            max-width: 1200px;
+            justify-content: center;
         }
         .search-group {
             display: flex;
@@ -93,6 +105,9 @@
             border: 1px solid #e2e8f0;
             margin-bottom: 20px;
             width: 100%;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
         }
         .data-table {
             width: 100%;
@@ -511,25 +526,26 @@
         }
     </style>
 
-    <div class="search-bar">
-        <div class="search-group">
-            <input type="text" name="search" placeholder="搜索姓名..." 
-                   value="{{ request('search') }}"
-                   class="search-input" id="searchInput">
-            <button type="button" onclick="submitSearch()" class="btn btn-blue">
-                <i class="fa-solid fa-search"></i> 搜索
-            </button>
-            <a href="{{ route('admin.member.index') }}" class="btn btn-gray">
-                重置
-            </a>
+    <div class="main-container">
+        <div class="search-bar">
+            <div class="search-group">
+                <input type="text" name="search" placeholder="搜索姓名..." 
+                       value="{{ request('search') }}"
+                       class="search-input" id="searchInput">
+                <button type="button" onclick="submitSearch()" class="btn btn-blue">
+                    <i class="fa-solid fa-search"></i> 搜索
+                </button>
+                <a href="{{ route('admin.member.index') }}" class="btn btn-gray">
+                    重置
+                </a>
+            </div>
         </div>
-    </div>
 
-    <form id="searchForm" method="GET" action="{{ route('admin.member.index') }}">
-        <input type="hidden" name="search" id="searchHidden">
-    </form>
+        <form id="searchForm" method="GET" action="{{ route('admin.member.index') }}">
+            <input type="hidden" name="search" id="searchHidden">
+        </form>
 
-    <div class="table-container">
+        <div class="table-container">
         <table class="data-table">
             <thead>
                 <tr>
@@ -595,6 +611,8 @@
             {{ $members->links() }}
         </div>
     @endif
+
+    </div>
 
     <div id="passwordModal" class="modal-overlay">
         <div class="modal">

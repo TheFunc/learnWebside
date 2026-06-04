@@ -320,6 +320,30 @@
                     </a>
                 </div>
             </div>
+
+            <div class="menu-item">
+                <div class="menu-header" onclick="toggleMenu(this)">
+                    <div class="menu-content">
+                        <i class="icon fa-solid fa-video"></i>
+                        <span class="title">视频</span>
+                    </div>
+                    <span class="arrow">›</span>
+                </div>
+                <div class="sub-menu">
+                    <a href="{{ route('admin.video.course') }}" {{ request()->routeIs('admin.video.course') ? 'class=active' : '' }}>
+                        <i class="sub-icon fa-solid fa-book-open"></i>
+                        <span>课程管理</span>
+                    </a>
+                    <a href="{{ route('admin.video.manage') }}" {{ request()->routeIs('admin.video.manage') ? 'class=active' : '' }}>
+                        <i class="sub-icon fa-solid fa-film"></i>
+                        <span>视频管理</span>
+                    </a>
+                    <a href="{{ route('admin.video.create') }}" {{ request()->routeIs('admin.video.create') ? 'class=active' : '' }}>
+                        <i class="sub-icon fa-solid fa-plus-circle"></i>
+                        <span>增加视频</span>
+                    </a>
+                </div>
+            </div>
         </div>
         <div class="content">
             <div class="content-header">
