@@ -14,18 +14,18 @@
         }
         
         :root {
-            --primary: #0F172A;
-            --primary-light: #1E293B;
-            --primary-hover: #334155;
-            --accent: #3B82F6;
-            --accent-hover: #2563EB;
-            --accent-light: rgba(59, 130, 246, 0.1);
+            --primary: #374151;
+            --primary-light: #4B5563;
+            --primary-hover: #6B7280;
+            --accent: #E5E7EB;
+            --accent-hover: #F3F4F6;
+            --accent-light: rgba(229, 231, 235, 0.1);
             --success: #10B981;
             --danger: #EF4444;
             
-            --text-primary: #F8FAFC;
-            --text-secondary: #94A3B8;
-            --text-muted: #64748B;
+            --text-primary: #F9FAFB;
+            --text-secondary: #D1D5DB;
+            --text-muted: #9CA3AF;
             
             --content-bg: #F1F5F9;
             --card-bg: #FFFFFF;
@@ -49,7 +49,7 @@
         }
 
         .sidebar {
-            width: 250px;
+            width: 230px;
             background: linear-gradient(180deg, var(--primary) 0%, var(--primary-light) 100%);
             color: var(--text-primary);
             position: fixed;
@@ -141,10 +141,10 @@
         }
 
         .menu-item > .menu-header:hover .icon {
-            background: rgba(59, 130, 246, 0.25);
-            color: #60A5FA;
+            background: rgba(255, 255, 255, 0.2);
+            color: #FFFFFF;
             transform: scale(1.08);
-            box-shadow: 0 0 12px rgba(59, 130, 246, 0.35);
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
         }
 
         .menu-item > .menu-header .title {
@@ -156,7 +156,7 @@
         .sub-menu {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease-in, transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease-in, transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 0;
             background: rgba(0, 0, 0, 0.15);
             transform: translateY(-8px);
@@ -166,7 +166,7 @@
             max-height: 200px;
             opacity: 1;
             transform: translateY(0);
-            transition: max-height 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease-out, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: max-height 1s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.8s ease-out, transform 1s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .sub-menu a {
@@ -243,9 +243,9 @@
         }
 
         .content {
-            margin-left: 250px;
+            margin-left: 230px;
             flex: 1;
-            padding: 30px;
+            padding: 30px 0;
             overflow-y: auto;
         }
 
@@ -274,10 +274,10 @@
 
         .content-body {
             background: var(--card-bg);
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--card-border);
+            padding: 30px 0;
+            border-radius: 0;
+            box-shadow: none;
+            border: none;
         }
 
         @media (max-width: 768px) {

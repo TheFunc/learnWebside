@@ -523,26 +523,10 @@
                 重置
             </a>
         </div>
-        <div class="search-group">
-            <span class="filter-label">状态排序:</span>
-            <select name="status_sort" class="filter-select">
-                <option value="">全部</option>
-                <option value="online" {{ request('status_sort') == 'online' ? 'selected' : '' }}>在线优先</option>
-                <option value="offline" {{ request('status_sort') == 'offline' ? 'selected' : '' }}>离开优先</option>
-            </select>
-            <span class="filter-label">权限排序:</span>
-            <select name="permission_sort" class="filter-select">
-                <option value="">全部</option>
-                <option value="admin" {{ request('permission_sort') == 'admin' ? 'selected' : '' }}>管理员优先</option>
-                <option value="member" {{ request('permission_sort') == 'member' ? 'selected' : '' }}>成员优先</option>
-            </select>
-        </div>
     </div>
 
     <form id="searchForm" method="GET" action="{{ route('admin.member.index') }}">
         <input type="hidden" name="search" id="searchHidden">
-        <input type="hidden" name="status_sort" id="statusSortHidden">
-        <input type="hidden" name="permission_sort" id="permissionSortHidden">
     </form>
 
     <div class="table-container">
@@ -550,12 +534,12 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>创建时间</th>
                     <th>姓名</th>
                     <th>密码</th>
                     <th>权限</th>
                     <th>状态</th>
                     <th>学习时间</th>
-                    <th>创建时间</th>
                     <th>操作</th>
                 </tr>
             </thead>
@@ -563,6 +547,7 @@
                 @foreach($members as $member)
                 <tr>
                     <td>{{ $member->id }}</td>
+                    <td>{{ $member->created_at->format('Y-m-d H:i') }}</td>
                     <td>{{ $member->Name }}</td>
                     <td class="password-text">{{ $member->Password }}</td>
                     <td>
@@ -576,7 +561,6 @@
                         </span>
                     </td>
                     <td>{{ $member->LearnTime }} 小时</td>
-                    <td>{{ $member->created_at->format('Y-m-d H:i') }}</td>
                     <td>
                         <button onclick="openPasswordModal({{ $member->id }}, '{{ $member->Name }}')" 
                                 class="btn-action btn-yellow">
@@ -647,8 +631,6 @@
     <script>
         function submitSearch() {
             document.getElementById('searchHidden').value = document.getElementById('searchInput').value;
-            document.getElementById('statusSortHidden').value = document.querySelector('select[name="status_sort"]').value;
-            document.getElementById('permissionSortHidden').value = document.querySelector('select[name="permission_sort"]').value;
             document.getElementById('searchForm').submit();
         }
 
