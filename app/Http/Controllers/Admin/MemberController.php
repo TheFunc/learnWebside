@@ -49,16 +49,16 @@ class MemberController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:menbers',
-            'password' => 'required',
-            'LearnTime' => 'required|integer',
+            'password' => 'required|confirmed',
+            'permission' => 'required|integer|in:0,1',
         ]);
 
         Menber::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
-            'LearnTime' => $request->LearnTime,
+            'Name' => $request->name,
+            'Password' => $request->password,
+            'Permission' => $request->permission,
+            'Status' => 0,
+            'LearnTime' => 0,
         ]);
 
         return redirect()->route('admin.member.index')->with('success', '成员添加成功');
