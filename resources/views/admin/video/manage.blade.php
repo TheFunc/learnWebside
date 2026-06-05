@@ -315,10 +315,13 @@
         function confirmDelete() {
             if (!deleteGroupID) return;
 
+            // 先保存 groupID，因为 hideDeleteConfirm() 会把 deleteGroupID 设为 null
+            const currentGroupID = deleteGroupID;
+            
             // 立即关闭弹窗，给用户即时反馈
             hideDeleteConfirm();
             
-            fetch(`/video/group/${deleteGroupID}`, {
+            fetch(`/video/group/${currentGroupID}`, {
                 method: 'DELETE',
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
@@ -329,7 +332,7 @@
                 if (data.success) {
                     showToast('删除成功');
                     // 直接从DOM中移除被删除的行，立即反馈给用户
-                    const deleteBtn = document.querySelector(`button[onclick="showDeleteConfirm(${deleteGroupID})"]`);
+                    const deleteBtn = document.querySelector(`button[onclick="showDeleteConfirm(${currentGroupID})"]`);
                     if (deleteBtn) {
                         const row = deleteBtn.closest('tr');
                         if (row) {
