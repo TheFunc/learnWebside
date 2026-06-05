@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\HomeworkController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\VideoController;
 
@@ -34,9 +35,8 @@ Route::get('homework/preview', function () {
     return view('admin.homework.preview');
 })->name('admin.homework.preview');
 
-Route::get('homework/assign', function () {
-    return view('admin.homework.assign');
-})->name('admin.homework.assign');
+Route::get('homework/assign', [HomeworkController::class, 'assign'])->name('admin.homework.assign');
+Route::post('homework/assign', [HomeworkController::class, 'store'])->name('admin.homework.store');
 
 Route::get('homework/member', function () {
     return view('admin.homework.member');
