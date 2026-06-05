@@ -345,6 +345,30 @@
                     </a>
                 </div>
             </div>
+
+            <div class="menu-item">
+                <div class="menu-header" onclick="toggleMenu(this)">
+                    <div class="menu-content">
+                        <i class="icon fa-solid fa-file-text"></i>
+                        <span class="title">作业</span>
+                    </div>
+                    <span class="arrow">›</span>
+                </div>
+                <div class="sub-menu">
+                    <a href="{{ route('admin.homework.preview') }}" {{ request()->routeIs('admin.homework.preview') ? 'class=active' : '' }}>
+                        <i class="sub-icon fa-solid fa-eye"></i>
+                        <span>作业预览</span>
+                    </a>
+                    <a href="{{ route('admin.homework.assign') }}" {{ request()->routeIs('admin.homework.assign') ? 'class=active' : '' }}>
+                        <i class="sub-icon fa-solid fa-edit"></i>
+                        <span>布置作业</span>
+                    </a>
+                    <a href="{{ route('admin.homework.member') }}" {{ request()->routeIs('admin.homework.member') ? 'class=active' : '' }}>
+                        <i class="sub-icon fa-solid fa-users"></i>
+                        <span>成员作业</span>
+                    </a>
+                </div>
+            </div>
         </div>
         <div class="content">
             <div class="content-header">

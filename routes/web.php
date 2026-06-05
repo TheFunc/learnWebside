@@ -29,3 +29,15 @@ Route::post('video/upload-cover', [VideoController::class, 'uploadCover'])->name
 Route::post('video/upload-video', [VideoController::class, 'uploadVideo'])->name('admin.video.upload.video');
 Route::post('video/save-info', [VideoController::class, 'saveVideoInfo'])->name('admin.video.save.info');
 Route::get('video/stream/{path}', [VideoController::class, 'streamVideo'])->name('admin.video.stream')->where('path', '.*');
+
+Route::get('homework/preview', function () {
+    return view('admin.homework.preview');
+})->name('admin.homework.preview');
+
+Route::get('homework/assign', function () {
+    return view('admin.homework.assign');
+})->name('admin.homework.assign');
+
+Route::get('homework/member', function () {
+    return view('admin.homework.member');
+})->name('admin.homework.member');
