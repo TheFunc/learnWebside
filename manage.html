@@ -1,0 +1,782 @@
+HTTP/1.1 200 OK
+Host: 127.0.0.1:8765
+Date: Fri, 05 Jun 2026 01:32:15 GMT
+Connection: close
+X-Powered-By: PHP/8.2.9
+Content-Type: text/html; charset=utf-8
+Cache-Control: no-cache, private
+Date: Fri, 05 Jun 2026 01:32:15 GMT
+Set-Cookie: XSRF-TOKEN=eyJpdiI6IlFxOWg4SHhaUW1vdXExNFgvdnhkbXc9PSIsInZhbHVlIjoiWEVUOVRBN1ZVMEhxbEx0SmhGY2VSQi9nUkZhc2hlaFl0eVUycDdwZXM0UHd6czFDNlR1azBqeXhYWnd0UXBjTTdwbS9BS3FoNzNGeUpEVGkwWWxXeUkwTFdRZ21LNFJ2K2QycWxqdFlQaEh1d0UyeVdRYXlSZVBiUlZUSjEvaGYiLCJtYWMiOiI4MGI0YjA5MzAxMjc2ZjJiNmFiOWVjYTNkNzI0OWQ0NmU0ZmY1ZDEyMGRkOWMwNGZlNTZhOTlhODc1ZDNjZjc4IiwidGFnIjoiIn0%3D; expires=Fri, 05 Jun 2026 03:32:15 GMT; Max-Age=7200; path=/; samesite=lax
+Set-Cookie: laravel-session=eyJpdiI6InQ5M3NNWktkeEZXNjY5ZFJtUEpaTHc9PSIsInZhbHVlIjoiaUJiZjF2N1Jma1NWWkdmWDVSZkw3c2NYZzBLNjlZK0tDTzV3ZlNnNHNiSmMzdFdDbHVGeHhlYTFmNFpCMHlBL09laEZPNEJOQTd3Qng1V050UGlDTkU4SXRpYmpieU92ZXh6OWkxajVDS2RMVkMzR1N4WmNjS24xczdGemVPYlIiLCJtYWMiOiJmYjk0MDU2ZGIzNjAzZTQyMDUwMDI5NjY2ZTI4NzEzM2EzNTIxNzk2NTBlZWYwMzQ0N2QzNTRjOTBlMDNmZmI0IiwidGFnIjoiIn0%3D; expires=Fri, 05 Jun 2026 03:32:15 GMT; Max-Age=7200; path=/; httponly; samesite=lax
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="7GH3MIo5G7zAF94mBbmD7k4CJV14wXZyBvSVlXaL">
+    <title>后台管理系统</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #374151;
+            --primary-light: #4B5563;
+            --primary-hover: #6B7280;
+            --accent: #E5E7EB;
+            --accent-hover: #F3F4F6;
+            --accent-light: rgba(229, 231, 235, 0.1);
+            --success: #10B981;
+            --danger: #EF4444;
+            
+            --text-primary: #F9FAFB;
+            --text-secondary: #D1D5DB;
+            --text-muted: #9CA3AF;
+            
+            --content-bg: #F1F5F9;
+            --card-bg: #FFFFFF;
+            --card-border: #E2E8F0;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+            background-color: var(--content-bg);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .admin-container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 230px;
+            background: linear-gradient(180deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--text-primary);
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .menu-item {
+            position: relative;
+        }
+
+        .menu-item > .menu-header {
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            background: transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-item > .menu-header::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent);
+            transform: scaleY(0);
+            transition: transform 0.25s ease;
+            transform-origin: top;
+        }
+
+        .menu-item > .menu-header:hover::before {
+            transform: scaleY(1);
+        }
+
+        .menu-item > .menu-header:hover {
+            background: var(--primary-hover);
+            padding-left: 28px;
+        }
+
+        .menu-item > .menu-header:active {
+            background: rgba(59, 130, 246, 0.2);
+        }
+
+        .menu-item > .menu-header .arrow {
+            font-size: 18px;
+            font-weight: 300;
+            color: var(--text-muted);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.25s ease;
+        }
+
+        .menu-item > .menu-header .arrow {
+            transition: color 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .menu-item > .menu-header:hover .arrow {
+            color: var(--accent);
+        }
+
+        .menu-item > .menu-header .arrow.expanded {
+            transform: rotate(90deg);
+        }
+
+        .menu-item > .menu-header .menu-content {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .menu-item > .menu-header .icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-light);
+            border-radius: 10px;
+            font-size: 16px;
+            color: var(--accent);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-shrink: 0;
+        }
+
+        .menu-item > .menu-header:hover .icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: #FFFFFF;
+            transform: scale(1.08);
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+        }
+
+        .menu-item > .menu-header .title {
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .sub-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease-in, transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            background: rgba(0, 0, 0, 0.15);
+            transform: translateY(-8px);
+        }
+
+        .sub-menu.active {
+            max-height: 200px;
+            opacity: 1;
+            transform: translateY(0);
+            transition: max-height 1s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.8s ease-out, transform 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .sub-menu a {
+            display: flex;
+            align-items: center;
+            padding: 14px 24px 14px 76px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: padding 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.25s ease, color 0.25s ease, border-left-color 0.25s ease;
+            position: relative;
+            border-left: 3px solid transparent;
+            opacity: 0.9;
+        }
+
+        .sub-menu a::before {
+            content: '';
+            position: absolute;
+            left: 50px;
+            top: 50%;
+            transform: translateY(-50%) scale(0.8);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0.6;
+        }
+
+        .sub-menu a:hover {
+            background: rgba(59, 130, 246, 0.12);
+            color: var(--text-primary);
+            padding-left: 82px;
+            border-left-color: var(--accent);
+            opacity: 1;
+        }
+
+        .sub-menu a:hover::before {
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+            transform: translateY(-50%) scale(1.2);
+            opacity: 1;
+        }
+
+        .sub-menu a.active {
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--text-primary);
+            border-left-color: var(--accent);
+            font-weight: 600;
+        }
+
+        .sub-menu a.active::before {
+            background: var(--accent);
+            box-shadow: 0 0 12px var(--accent);
+        }
+
+        .sub-menu a .sub-icon {
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 14px;
+            opacity: 0.7;
+            transition: opacity 0.25s ease;
+        }
+
+        .sub-menu a:hover .sub-icon,
+        .sub-menu a.active .sub-icon {
+            opacity: 1;
+            color: var(--accent);
+        }
+
+        .content {
+            margin-left: 230px;
+            flex: 1;
+            padding: 0;
+            overflow-y: auto;
+        }
+
+        .content-header {
+            padding: 20px 30px;
+            margin-bottom: 0;
+            border-bottom: 2px solid #e2e8f0;
+            background: var(--card-bg);
+        }
+
+        .content-header h1 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .content-header h1::before {
+            content: '';
+            width: 3px;
+            height: 20px;
+            background: #3b82f6;
+            border-radius: 2px;
+        }
+
+        .content-body {
+            background: var(--card-bg);
+            padding: 0;
+            border-radius: 0;
+            box-shadow: none;
+            border: none;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                z-index: 100;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="sidebar">
+            <div class="menu-item">
+                <div class="menu-header" onclick="toggleMenu(this)">
+                    <div class="menu-content">
+                        <i class="icon fa-solid fa-users"></i>
+                        <span class="title">成员管理</span>
+                    </div>
+                    <span class="arrow">›</span>
+                </div>
+                <div class="sub-menu">
+                    <a href="http://127.0.0.1:8765/root" >
+                        <i class="sub-icon fa-solid fa-list"></i>
+                        <span>成员列表</span>
+                    </a>
+                    <a href="http://127.0.0.1:8765/root/create" >
+                        <i class="sub-icon fa-solid fa-user-plus"></i>
+                        <span>添加成员</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <div class="menu-header" onclick="toggleMenu(this)">
+                    <div class="menu-content">
+                        <i class="icon fa-solid fa-video"></i>
+                        <span class="title">视频</span>
+                    </div>
+                    <span class="arrow">›</span>
+                </div>
+                <div class="sub-menu">
+                    <a href="http://127.0.0.1:8765/video/course" >
+                        <i class="sub-icon fa-solid fa-book-open"></i>
+                        <span>课程管理</span>
+                    </a>
+                    <a href="http://127.0.0.1:8765/video/manage" class=active>
+                        <i class="sub-icon fa-solid fa-film"></i>
+                        <span>视频管理</span>
+                    </a>
+                    <a href="http://127.0.0.1:8765/video/create" >
+                        <i class="sub-icon fa-solid fa-plus-circle"></i>
+                        <span>增加视频</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="content-header">
+                <h1>视频管理</h1>
+            </div>
+            <div class="content-body">
+                    <div class="video-manage-container">
+        
+        <table class="video-table">
+            <thead>
+                <tr>
+                    <th>上传日期</th>
+                    <th>封面</th>
+                    <th>视频名称</th>
+                    <th>课程类型</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                                    <tr>
+                        <td>2026-06-05</td>
+                        <td>
+                                                            <img src="http://127.0.0.1:8765/storage/covers/1/test.jpg" alt="封面" class="cover-image">
+                                                    </td>
+                        <td>Test Group 1</td>
+                        <td>Test Type</td>
+                        <td>
+                            <a href="http://127.0.0.1:8765/video/group/1" class="btn-edit">
+                                <i class="fas fa-edit"></i> 编辑
+                            </a>
+                            <button class="btn-delete" onclick="showDeleteConfirm(1)">
+                                <i class="fas fa-trash"></i> 删除
+                            </button>
+                        </td>
+                    </tr>
+                                    <tr>
+                        <td>2026-06-05</td>
+                        <td>
+                                                            <div class="no-cover">暂无封面</div>
+                                                    </td>
+                        <td>Test Group 2</td>
+                        <td>Test Type</td>
+                        <td>
+                            <a href="http://127.0.0.1:8765/video/group/2" class="btn-edit">
+                                <i class="fas fa-edit"></i> 编辑
+                            </a>
+                            <button class="btn-delete" onclick="showDeleteConfirm(2)">
+                                <i class="fas fa-trash"></i> 删除
+                            </button>
+                        </td>
+                    </tr>
+                            </tbody>
+        </table>
+    </div>
+
+    <!-- 删除确认弹窗 -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-overlay" onclick="hideDeleteConfirm()"></div>
+        <div class="modal-wrapper">
+            <div class="modal-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3 class="modal-title">确认删除</h3>
+            <p class="modal-message">确定要删除这个视频组吗？此操作不可恢复，所有相关视频将被永久删除。</p>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="hideDeleteConfirm()">取消</button>
+                <button class="btn-confirm" onclick="confirmDelete()">确认删除</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .video-manage-container {
+            padding: 0;
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 0;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .video-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .video-table th {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #495057;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .video-table td {
+            padding: 15px;
+            border-bottom: 1px solid #dee2e6;
+            vertical-align: middle;
+        }
+
+        .video-table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .cover-image {
+            width: 200px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .no-cover {
+            width: 200px;
+            height: 120px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        .btn-edit, .btn-delete {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            margin-right: 8px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .btn-edit {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #dc2626;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+        }
+
+        /* ===== 现代化确认弹窗 ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        /* 背景遮罩 - 毛玻璃效果 */
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            animation: fadeIn 0.25s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* 弹窗主体 */
+        .modal-wrapper {
+            position: relative;
+            z-index: 1001;
+            width: 90%;
+            max-width: 420px;
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            box-shadow:
+                0 25px 50px -12px rgba(0, 0, 0, 0.25),
+                0 0 0 1px rgba(0, 0, 0, 0.05);
+            animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* 图标 */
+        .modal-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-icon i {
+            font-size: 32px;
+            color: #d97706;
+        }
+
+        /* 标题 */
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 0 0 12px;
+        }
+
+        /* 消息 */
+        .modal-message {
+            font-size: 14px;
+            color: #64748b;
+            line-height: 1.6;
+            margin: 0 0 24px;
+        }
+
+        /* 按钮组 */
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-actions button {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-cancel {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+
+        .btn-cancel:hover {
+            background: #e2e8f0;
+            transform: translateY(-1px);
+        }
+
+        .btn-confirm {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .btn-confirm:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+        }
+
+        .btn-confirm:active {
+            transform: translateY(0);
+        }
+    </style>
+
+    <script>
+        let deleteGroupID = null;
+
+        function showDeleteConfirm(groupID) {
+            deleteGroupID = groupID;
+            document.getElementById('deleteModal').classList.add('active');
+        }
+
+        function hideDeleteConfirm() {
+            document.getElementById('deleteModal').classList.remove('active');
+            deleteGroupID = null;
+        }
+
+        function confirmDelete() {
+            if (!deleteGroupID) return;
+
+            // 立即关闭弹窗，给用户即时反馈
+            hideDeleteConfirm();
+            
+            fetch(`/video/group/${deleteGroupID}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showToast('删除成功');
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
+                } else {
+                    showToast('删除失败', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showToast('删除失败', 'error');
+            });
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 2000);
+        }
+    </script>
+
+    <style>
+        /* Toast 提示样式 */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 14px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            color: white;
+            z-index: 9999;
+            opacity: 0;
+            transform: translateX(120%);
+            transition: all 0.3s ease;
+        }
+
+        .toast-success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .toast-error {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    </style>
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleMenu(el) {
+            const arrow = el.querySelector('.arrow');
+            const subMenu = el.parentElement.querySelector('.sub-menu');
+            arrow.classList.toggle('expanded');
+            subMenu.classList.toggle('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const activeLink = document.querySelector('.sub-menu a.active');
+            if (activeLink) {
+                const menuItem = activeLink.closest('.menu-item');
+                const arrow = menuItem.querySelector('.arrow');
+                const subMenu = menuItem.querySelector('.sub-menu');
+                arrow.classList.add('expanded');
+                subMenu.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

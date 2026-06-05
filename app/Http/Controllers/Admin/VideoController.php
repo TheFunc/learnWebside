@@ -190,8 +190,14 @@ class VideoController extends Controller
 
     public function destroyGroup($groupID)
     {
+        \Log::info('尝试删除视频组', ['groupID' => $groupID]);
+        
+        // 确保 groupID 是整数
+        $groupID = (int)$groupID;
+        
         // 先获取视频标题（用于删除文件夹），必须在删除之前获取
         $videoGroup = VideoInfo::where('GroupID', $groupID)->first();
+        \Log::info('找到视频组', ['videoGroup' => $videoGroup ? $videoGroup->title : '未找到']);
         $folderName = $videoGroup ? $this->sanitizeFolderName($videoGroup->title) : null;
 
         // 获取封面并删除本地文件
@@ -200,18 +206,23 @@ class VideoController extends Controller
             $coverPath = storage_path('app/public/' . $cover->path);
             if (file_exists($coverPath)) {
                 unlink($coverPath);
+                \Log::info('删除封面文件', ['path' => $coverPath]);
             }
             $cover->delete();
+            \Log::info('删除封面数据库记录');
         }
 
         // 获取视频并删除本地文件
         $videos = VideoInfo::where('GroupID', $groupID)->get();
+        \Log::info('找到视频数量', ['count' => $videos->count()]);
         foreach ($videos as $video) {
             $videoPath = storage_path('app/public/' . $video->Path);
             if (file_exists($videoPath)) {
                 unlink($videoPath);
+                \Log::info('删除视频文件', ['path' => $videoPath]);
             }
             $video->delete();
+            \Log::info('删除视频数据库记录', ['id' => $video->VideoID]);
         }
 
         // 删除空文件夹（如果存在）
@@ -219,13 +230,17 @@ class VideoController extends Controller
             $folderPath = storage_path('app/public/videos/' . $folderName);
             if (is_dir($folderPath) && count(scandir($folderPath)) == 2) {
                 rmdir($folderPath);
+                \Log::info('删除视频文件夹', ['path' => $folderPath]);
             }
             $coverFolderPath = storage_path('app/public/covers/' . $folderName);
             if (is_dir($coverFolderPath) && count(scandir($coverFolderPath)) == 2) {
                 rmdir($coverFolderPath);
+                \Log::info('删除封面文件夹', ['path' => $coverFolderPath]);
             }
         }
 
+        \Log::info('视频组删除完成', ['groupID' => $groupID]);
+        
         return response()->json([
             'success' => true,
             'message' => '视频组删除成功',
@@ -234,8 +249,9 @@ class VideoController extends Controller
 
     private function sanitizeFolderName($name)
     {
+        // 使用 mb_ereg_replace 替代 preg_replace 来支持 Unicode
         // 移除特殊字符，只保留字母、数字、中文和下划线
-        $name = preg_replace('/[^\w\u4e00-\u9fa5\-]/u', '_', $name);
+        $name = mb_ereg_replace('[^a-zA-Z0-9_\x{4e00}-\x{9fa5}-]', '_', $name);
         // 移除连续的下划线
         $name = preg_replace('/_+/', '_', $name);
         // 移除首尾下划线

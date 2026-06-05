@@ -328,9 +328,18 @@
             .then(data => {
                 if (data.success) {
                     showToast('删除成功');
-                    setTimeout(() => {
-                        location.reload();
-                    }, 1500);
+                    // 直接从DOM中移除被删除的行，立即反馈给用户
+                    const deleteBtn = document.querySelector(`button[onclick="showDeleteConfirm(${deleteGroupID})"]`);
+                    if (deleteBtn) {
+                        const row = deleteBtn.closest('tr');
+                        if (row) {
+                            row.style.transition = 'opacity 0.3s ease';
+                            row.style.opacity = '0';
+                            setTimeout(() => {
+                                row.remove();
+                            }, 300);
+                        }
+                    }
                 } else {
                     showToast('删除失败', 'error');
                 }
