@@ -20,3 +20,12 @@ Route::delete('root/{id}', [MemberController::class, 'destroy'])->name('admin.me
 Route::get('video/course', [VideoController::class, 'course'])->name('admin.video.course');
 Route::get('video/manage', [VideoController::class, 'manage'])->name('admin.video.manage');
 Route::get('video/create', [VideoController::class, 'create'])->name('admin.video.create');
+Route::get('video/group/{groupID}', [VideoController::class, 'getGroupVideos'])->name('admin.video.group');
+Route::delete('video/group/{groupID}', [VideoController::class, 'destroyGroup'])->name('admin.video.group.destroy');
+Route::post('video/type', [VideoController::class, 'storeType'])->name('admin.video.type.store');
+Route::put('video/type/{id}', [VideoController::class, 'updateType'])->name('admin.video.type.update');
+Route::delete('video/type/{id}', [VideoController::class, 'destroyType'])->name('admin.video.type.destroy');
+Route::post('video/upload-cover', [VideoController::class, 'uploadCover'])->name('admin.video.upload.cover');
+Route::post('video/upload-video', [VideoController::class, 'uploadVideo'])->name('admin.video.upload.video');
+Route::post('video/save-info', [VideoController::class, 'saveVideoInfo'])->name('admin.video.save.info');
+Route::get('video/stream/{path}', [VideoController::class, 'streamVideo'])->name('admin.video.stream')->where('path', '.*');

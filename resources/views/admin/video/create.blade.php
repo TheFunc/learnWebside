@@ -3,6 +3,890 @@
 @section('title', '增加视频')
 
 @section('content')
-    <h2>增加视频</h2>
-    <p>增加视频页面内容待开发...</p>
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 30px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border-radius: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #334155;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 15px;
+            color: #334155;
+            background: #f8fafc;
+            transition: all 0.25s ease;
+            box-sizing: border-box;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            background: #ffffff;
+        }
+
+        .form-input::placeholder {
+            color: #94a3b8;
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 15px;
+            color: #334155;
+            background: #f8fafc;
+            transition: all 0.25s ease;
+            box-sizing: border-box;
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            background: #ffffff;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 15px;
+            color: #334155;
+            background: #f8fafc;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            background: #ffffff;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        .btn:hover::before {
+            opacity: 1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-primary::before {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .btn-secondary::before {
+            background: linear-gradient(135deg, rgba(0,0,0,0.05) 0%, transparent 50%);
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+            transform: translateY(-1px);
+        }
+
+        .btn-success {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            font-size: 13px;
+        }
+
+        .btn-danger {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            font-size: 13px;
+        }
+
+        .upload-area {
+            border: 2px dashed #e2e8f0;
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            background: #fafafa;
+        }
+
+        .upload-area:hover {
+            border-color: #3b82f6;
+            background: #f0f9ff;
+        }
+
+        .upload-area.dragover {
+            border-color: #3b82f6;
+            background: #eff6ff;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        .upload-area i {
+            font-size: 48px;
+            color: #94a3b8;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .upload-area span {
+            display: block;
+            font-size: 15px;
+            color: #475569;
+            font-weight: 500;
+        }
+
+        .upload-area small {
+            display: block;
+            font-size: 13px;
+            color: #94a3b8;
+            margin-top: 8px;
+        }
+
+        .file-list {
+            margin-top: 20px;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: #f8fafc;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            transition: all 0.25s ease;
+        }
+
+        .file-item:hover {
+            background: #f1f5f9;
+        }
+
+        .file-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 14px;
+            font-size: 20px;
+        }
+
+        .file-icon.image {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: white;
+        }
+
+        .file-icon.video {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .file-info {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .file-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #334155;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .file-size {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+
+        .file-progress {
+            margin-top: 8px;
+            height: 4px;
+            background: #e2e8f0;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .file-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .file-status {
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .file-status.success {
+            color: #10b981;
+        }
+
+        .file-status.error {
+            color: #ef4444;
+        }
+
+        .file-status.uploading {
+            color: #3b82f6;
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .cover-preview {
+            margin-top: 16px;
+            max-width: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .cover-preview img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .group-id-display {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .alert {
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-success {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .success-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .success-modal-overlay.active {
+            display: flex;
+        }
+
+        .success-modal {
+            background: #fff;
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border: 1px solid #e2e8f0;
+            animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+        }
+
+        .success-icon i {
+            font-size: 40px;
+            color: white;
+        }
+
+        .success-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 12px;
+        }
+
+        .success-message {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 24px;
+        }
+
+        .success-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 24px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #3b82f6;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+
+        .success-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .success-actions .btn {
+            flex: 1;
+        }
+    </style>
+
+    <div class="container">
+        @if(session('success'))
+            <div class="alert alert-success">
+                <i class="fa-solid fa-check-circle"></i>
+                {{ session('success') }}
+            </div>
+        @endif
+
+        <div class="card">
+            <h3 class="card-title">增加视频</h3>
+            
+            <input type="hidden" id="groupID" value="{{ $groupID }}">
+
+            <div class="form-group">
+                <label class="form-label">视频标题</label>
+                <input type="text" id="title" class="form-input" placeholder="请输入视频标题" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">视频类型</label>
+                <select id="typeID" class="form-select" required>
+                    <option value="">请选择视频类型</option>
+                    @foreach($types as $type)
+                        <option value="{{ $type->TypeID }}">{{ $type->Type }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">视频描述</label>
+                <textarea id="description" class="form-textarea" placeholder="请输入视频描述"></textarea>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-title">封面上传</h3>
+            
+            <div class="upload-area" id="coverUploadArea" onclick="document.getElementById('coverFile').click()">
+                <i class="fa-solid fa-image"></i>
+                <span>点击或拖拽上传封面图片</span>
+                <small>支持 JPG、PNG、GIF 格式，最大 2MB</small>
+            </div>
+            
+            <input type="file" id="coverFile" class="hidden" accept="image/jpeg,image/png,image/gif">
+            
+            <div id="coverPreview"></div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-title">视频上传</h3>
+            
+            <div class="upload-area" id="videoUploadArea" onclick="document.getElementById('videoFiles').click()">
+                <i class="fa-solid fa-video"></i>
+                <span>点击或拖拽上传视频文件</span>
+                <small>支持 MP4、AVI、MOV、WMV、FLV 格式，最大 500MB</small>
+            </div>
+            
+            <input type="file" id="videoFiles" class="hidden" accept="video/*" multiple>
+            
+            <div class="file-list" id="videoFileList"></div>
+        </div>
+
+        <div class="card">
+            <div class="form-actions" style="justify-content: flex-end;">
+                <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                    <i class="fa-solid fa-rotate-left"></i> 重置
+                </button>
+                <button type="button" class="btn btn-primary" onclick="saveAll()">
+                    <i class="fa-solid fa-save"></i> 保存全部
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="success-modal-overlay" id="successModal">
+        <div class="success-modal">
+            <div class="success-icon">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 class="success-title">保存成功</h3>
+            <p class="success-message">视频信息已成功保存到系统</p>
+            <div class="success-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="statVideos">0</div>
+                    <div class="stat-label">视频数量</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="statCover">否</div>
+                    <div class="stat-label">封面上传</div>
+                </div>
+            </div>
+            <div class="success-actions">
+                <button class="btn btn-secondary" onclick="closeSuccessModal()">
+                    <i class="fa-solid fa-rotate-left"></i> 继续添加
+                </button>
+                <button class="btn btn-primary" onclick="goToVideoManage()">
+                    <i class="fa-solid fa-list"></i> 查看列表
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const uploadedVideos = [];
+        let coverPath = null;
+        let coverFilename = null;
+
+        document.getElementById('coverUploadArea').addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.classList.add('dragover');
+        });
+
+        document.getElementById('coverUploadArea').addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            this.classList.remove('dragover');
+        });
+
+        document.getElementById('coverUploadArea').addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0 && files[0].type.startsWith('image/')) {
+                uploadCover(files[0]);
+            }
+        });
+
+        document.getElementById('coverFile').addEventListener('change', function(e) {
+            if (this.files.length > 0) {
+                uploadCover(this.files[0]);
+            }
+        });
+
+        document.getElementById('videoUploadArea').addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.classList.add('dragover');
+        });
+
+        document.getElementById('videoUploadArea').addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            this.classList.remove('dragover');
+        });
+
+        document.getElementById('videoUploadArea').addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            for (let i = 0; i < files.length; i++) {
+                if (files[i].type.startsWith('video/')) {
+                    uploadVideo(files[i]);
+                }
+            }
+        });
+
+        document.getElementById('videoFiles').addEventListener('change', function(e) {
+            for (let i = 0; i < this.files.length; i++) {
+                uploadVideo(this.files[i]);
+            }
+            this.value = '';
+        });
+
+        function uploadCover(file) {
+            const previewDiv = document.getElementById('coverPreview');
+            previewDiv.innerHTML = `
+                <div class="file-item">
+                    <div class="file-icon image">
+                        <i class="fa-solid fa-image"></i>
+                    </div>
+                    <div class="file-info">
+                        <div class="file-name">${file.name}</div>
+                        <div class="file-size">${formatFileSize(file.size)}</div>
+                        <div class="file-progress">
+                            <div class="file-progress-bar" style="width: 0%"></div>
+                        </div>
+                        <div class="file-status uploading">上传中...</div>
+                    </div>
+                </div>
+            `;
+
+            const formData = new FormData();
+            formData.append('cover', file);
+            formData.append('groupID', document.getElementById('groupID').value);
+            formData.append('title', document.getElementById('title').value);
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '{{ route('admin.video.upload.cover') }}');
+            xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
+
+            xhr.upload.addEventListener('progress', function(e) {
+                if (e.lengthComputable) {
+                    const percent = (e.loaded / e.total) * 100;
+                    previewDiv.querySelector('.file-progress-bar').style.width = percent + '%';
+                }
+            });
+
+            xhr.addEventListener('load', function() {
+                if (xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    coverPath = response.path;
+                    coverFilename = response.filename;
+                    
+                    previewDiv.innerHTML = `
+                        <div class="cover-preview">
+                            <img src="${window.location.origin}/storage/${response.path}" alt="封面预览">
+                        </div>
+                        <div class="file-item" style="margin-top: 10px;">
+                            <div class="file-icon image">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <div class="file-info">
+                                <div class="file-name">${response.filename}</div>
+                                <div class="file-size">${formatFileSize(file.size)}</div>
+                                <div class="file-status success">上传成功</div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="btn btn-danger" onclick="removeCover()">
+                                    <i class="fa-solid fa-trash"></i> 删除
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    previewDiv.querySelector('.file-status').textContent = '上传失败';
+                    previewDiv.querySelector('.file-status').className = 'file-status error';
+                }
+            });
+
+            xhr.addEventListener('error', function() {
+                previewDiv.querySelector('.file-status').textContent = '上传失败';
+                previewDiv.querySelector('.file-status').className = 'file-status error';
+            });
+
+            xhr.send(formData);
+        }
+
+        function removeCover() {
+            coverPath = null;
+            coverFilename = null;
+            document.getElementById('coverPreview').innerHTML = '';
+        }
+
+        function uploadVideo(file) {
+            const fileList = document.getElementById('videoFileList');
+            const fileId = 'video-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+            
+            fileList.innerHTML += `
+                <div class="file-item" id="${fileId}">
+                    <div class="file-icon video">
+                        <i class="fa-solid fa-video"></i>
+                    </div>
+                    <div class="file-info">
+                        <div class="file-name">${file.name}</div>
+                        <div class="file-size">${formatFileSize(file.size)}</div>
+                        <div class="file-progress">
+                            <div class="file-progress-bar" style="width: 0%"></div>
+                        </div>
+                        <div class="file-status uploading">上传中...</div>
+                    </div>
+                    <div class="file-actions">
+                        <button class="btn btn-danger" onclick="cancelUpload('${fileId}')">
+                            <i class="fa-solid fa-x"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            const formData = new FormData();
+            formData.append('video', file);
+            formData.append('groupID', document.getElementById('groupID').value);
+            formData.append('title', document.getElementById('title').value);
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '{{ route('admin.video.upload.video') }}');
+            xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
+
+            xhr.upload.addEventListener('progress', function(e) {
+                if (e.lengthComputable) {
+                    const percent = (e.loaded / e.total) * 100;
+                    document.querySelector('#' + fileId + ' .file-progress-bar').style.width = percent + '%';
+                }
+            });
+
+            xhr.addEventListener('load', function() {
+                if (xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    
+                    uploadedVideos.push({
+                        path: response.path,
+                        filename: response.filename,
+                        originalName: file.name
+                    });
+
+                    document.querySelector('#' + fileId + ' .file-status').textContent = '上传成功';
+                    document.querySelector('#' + fileId + ' .file-status').className = 'file-status success';
+                    document.querySelector('#' + fileId + ' .file-icon').innerHTML = '<i class="fa-solid fa-check"></i>';
+                    document.querySelector('#' + fileId + ' .file-actions').innerHTML = `
+                        <button class="btn btn-danger" onclick="removeVideo('${fileId}', '${response.path}')">
+                            <i class="fa-solid fa-trash"></i> 删除
+                        </button>
+                    `;
+                } else {
+                    document.querySelector('#' + fileId + ' .file-status').textContent = '上传失败';
+                    document.querySelector('#' + fileId + ' .file-status').className = 'file-status error';
+                }
+            });
+
+            xhr.addEventListener('error', function() {
+                document.querySelector('#' + fileId + ' .file-status').textContent = '上传失败';
+                document.querySelector('#' + fileId + ' .file-status').className = 'file-status error';
+            });
+
+            xhr.send(formData);
+        }
+
+        function cancelUpload(fileId) {
+            document.getElementById(fileId).remove();
+        }
+
+        function removeVideo(fileId, path) {
+            const index = uploadedVideos.findIndex(v => v.path === path);
+            if (index > -1) {
+                uploadedVideos.splice(index, 1);
+            }
+            document.getElementById(fileId).remove();
+        }
+
+        function saveAll() {
+            const title = document.getElementById('title').value.trim();
+            const typeID = document.getElementById('typeID').value;
+            const description = document.getElementById('description').value.trim();
+            const groupID = document.getElementById('groupID').value;
+
+            if (!title) {
+                alert('请输入视频标题');
+                return;
+            }
+
+            if (!typeID) {
+                alert('请选择视频类型');
+                return;
+            }
+
+            if (uploadedVideos.length === 0) {
+                alert('请至少上传一个视频');
+                return;
+            }
+
+            fetch('{{ route('admin.video.save.info') }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    title: title,
+                    typeID: typeID,
+                    description: description,
+                    groupID: groupID,
+                    videos: uploadedVideos,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showSuccessModal();
+                } else {
+                    alert('保存失败，请重试');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('保存失败，请重试');
+            });
+        }
+
+        function resetForm() {
+            document.getElementById('title').value = '';
+            document.getElementById('typeID').value = '';
+            document.getElementById('description').value = '';
+            coverPath = null;
+            coverFilename = null;
+            uploadedVideos.length = 0;
+            document.getElementById('coverPreview').innerHTML = '';
+            document.getElementById('videoFileList').innerHTML = '';
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function showSuccessModal() {
+            document.getElementById('statVideos').textContent = uploadedVideos.length;
+            document.getElementById('statCover').textContent = coverPath ? '是' : '否';
+            document.getElementById('successModal').classList.add('active');
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('successModal').classList.remove('active');
+            resetForm();
+        }
+
+        function goToVideoManage() {
+            window.location.href = '{{ route('admin.video.manage') }}';
+        }
+    </script>
 @endsection

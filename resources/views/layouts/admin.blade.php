@@ -245,14 +245,15 @@
         .content {
             margin-left: 230px;
             flex: 1;
-            padding: 30px 0;
+            padding: 0;
             overflow-y: auto;
         }
 
         .content-header {
-            padding: 0 0 20px 0;
-            margin-bottom: 20px;
+            padding: 20px 30px;
+            margin-bottom: 0;
             border-bottom: 2px solid #e2e8f0;
+            background: var(--card-bg);
         }
 
         .content-header h1 {
@@ -274,7 +275,7 @@
 
         .content-body {
             background: var(--card-bg);
-            padding: 30px 0;
+            padding: 0;
             border-radius: 0;
             box-shadow: none;
             border: none;
