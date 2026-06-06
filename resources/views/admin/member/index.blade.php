@@ -556,6 +556,7 @@
                     <th>权限</th>
                     <th>状态</th>
                     <th>学习时间</th>
+                    <th>登录时间</th>
                     <th>操作</th>
                 </tr>
             </thead>
@@ -577,6 +578,7 @@
                         </span>
                     </td>
                     <td>{{ $member->LearnTime }} 小时</td>
+                    <td>{{ $member->LoginTime ? $member->LoginTime->format('Y-m-d H:i') : '从未登录' }}</td>
                     <td>
                         <button onclick="openPasswordModal({{ $member->id }}, '{{ $member->Name }}')" 
                                 class="btn-action btn-yellow">

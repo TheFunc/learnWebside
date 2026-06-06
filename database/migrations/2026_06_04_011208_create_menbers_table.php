@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer("Permission")->comment("权限 0:成员， 1: 管理");
             $table->integer("Status")->comment("状态 0: 离开， 1: 在线");
             $table->unsignedInteger("LearnTime")->comment("学习时间");
+            $table->dateTime("LoginTime")->comment("登录时间")->nullable();
 
             $table->timestamps();
         });

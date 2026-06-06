@@ -8,4 +8,8 @@ class Menber extends Model
 {
     //
     protected $guarded = [];
+
+    protected $casts = [
+        'LoginTime' => 'datetime',
+    ];
 }

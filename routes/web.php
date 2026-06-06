@@ -4,10 +4,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HomeworkController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\VideoController;
+use App\Http\Controllers\LoginController;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('rootlogin', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('rootlogin', [LoginController::class, 'login'])->name('login');
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::resource('root', MemberController::class)->only(['index', 'create', 'store'])->names([
     'index' => 'admin.member.index',
@@ -31,13 +36,13 @@ Route::post('video/upload-video', [VideoController::class, 'uploadVideo'])->name
 Route::post('video/save-info', [VideoController::class, 'saveVideoInfo'])->name('admin.video.save.info');
 Route::get('video/stream/{path}', [VideoController::class, 'streamVideo'])->name('admin.video.stream')->where('path', '.*');
 
-Route::get('homework/preview', function () {
-    return view('admin.homework.preview');
-})->name('admin.homework.preview');
+Route::get('homework/preview', [HomeworkController::class, 'preview'])->name('admin.homework.preview');
+Route::put('homework/{id}', [HomeworkController::class, 'update'])->name('admin.homework.update');
+Route::delete('homework/{id}', [HomeworkController::class, 'destroy'])->name('admin.homework.destroy');
 
 Route::get('homework/assign', [HomeworkController::class, 'assign'])->name('admin.homework.assign');
 Route::post('homework/assign', [HomeworkController::class, 'store'])->name('admin.homework.store');
 
-Route::get('homework/member', function () {
-    return view('admin.homework.member');
-})->name('admin.homework.member');
+Route::get('homework/member', [HomeworkController::class, 'member'])->name('admin.homework.member');
+Route::get('homework/member/download/{id}', [HomeworkController::class, 'downloadHomework'])->name('admin.homework.member.download');
+Route::delete('homework/member/{id}', [HomeworkController::class, 'destroyMember'])->name('admin.homework.member.destroy');
