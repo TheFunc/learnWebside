@@ -57,7 +57,7 @@ class MemberController extends Controller
             'Name' => $request->name,
             'Password' => $request->password,
             'Permission' => $request->permission,
-            'Status' => 0,
+            'Status' => $request->permission == 1 ? 1 : 0,
             'LearnTime' => 0,
         ]);
 

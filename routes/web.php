@@ -14,35 +14,37 @@ Route::get('rootlogin', [LoginController::class, 'showLoginForm'])->name('login'
 Route::post('rootlogin', [LoginController::class, 'login'])->name('login');
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::resource('root', MemberController::class)->only(['index', 'create', 'store'])->names([
-    'index' => 'admin.member.index',
-    'create' => 'admin.member.create',
-    'store' => 'admin.member.store',
-]);
+Route::middleware('admin.auth')->group(function () {
+    Route::resource('root', MemberController::class)->only(['index', 'create', 'store'])->names([
+        'index' => 'admin.member.index',
+        'create' => 'admin.member.create',
+        'store' => 'admin.member.store',
+    ]);
 
-Route::post('root/{id}/password', [MemberController::class, 'updatePassword'])->name('admin.member.password');
-Route::delete('root/{id}', [MemberController::class, 'destroy'])->name('admin.member.destroy');
+    Route::post('root/{id}/password', [MemberController::class, 'updatePassword'])->name('admin.member.password');
+    Route::delete('root/{id}', [MemberController::class, 'destroy'])->name('admin.member.destroy');
 
-Route::get('video/course', [VideoController::class, 'course'])->name('admin.video.course');
-Route::get('video/manage', [VideoController::class, 'manage'])->name('admin.video.manage');
-Route::get('video/create', [VideoController::class, 'create'])->name('admin.video.create');
-Route::get('video/group/{groupID}', [VideoController::class, 'getGroupVideos'])->name('admin.video.group');
-Route::delete('video/group/{groupID}', [VideoController::class, 'destroyGroup'])->name('admin.video.group.destroy');
-Route::post('video/type', [VideoController::class, 'storeType'])->name('admin.video.type.store');
-Route::put('video/type/{id}', [VideoController::class, 'updateType'])->name('admin.video.type.update');
-Route::delete('video/type/{id}', [VideoController::class, 'destroyType'])->name('admin.video.type.destroy');
-Route::post('video/upload-cover', [VideoController::class, 'uploadCover'])->name('admin.video.upload.cover');
-Route::post('video/upload-video', [VideoController::class, 'uploadVideo'])->name('admin.video.upload.video');
-Route::post('video/save-info', [VideoController::class, 'saveVideoInfo'])->name('admin.video.save.info');
-Route::get('video/stream/{path}', [VideoController::class, 'streamVideo'])->name('admin.video.stream')->where('path', '.*');
+    Route::get('video/course', [VideoController::class, 'course'])->name('admin.video.course');
+    Route::get('video/manage', [VideoController::class, 'manage'])->name('admin.video.manage');
+    Route::get('video/create', [VideoController::class, 'create'])->name('admin.video.create');
+    Route::get('video/group/{groupID}', [VideoController::class, 'getGroupVideos'])->name('admin.video.group');
+    Route::delete('video/group/{groupID}', [VideoController::class, 'destroyGroup'])->name('admin.video.group.destroy');
+    Route::post('video/type', [VideoController::class, 'storeType'])->name('admin.video.type.store');
+    Route::put('video/type/{id}', [VideoController::class, 'updateType'])->name('admin.video.type.update');
+    Route::delete('video/type/{id}', [VideoController::class, 'destroyType'])->name('admin.video.type.destroy');
+    Route::post('video/upload-cover', [VideoController::class, 'uploadCover'])->name('admin.video.upload.cover');
+    Route::post('video/upload-video', [VideoController::class, 'uploadVideo'])->name('admin.video.upload.video');
+    Route::post('video/save-info', [VideoController::class, 'saveVideoInfo'])->name('admin.video.save.info');
+    Route::get('video/stream/{path}', [VideoController::class, 'streamVideo'])->name('admin.video.stream')->where('path', '.*');
 
-Route::get('homework/preview', [HomeworkController::class, 'preview'])->name('admin.homework.preview');
-Route::put('homework/{id}', [HomeworkController::class, 'update'])->name('admin.homework.update');
-Route::delete('homework/{id}', [HomeworkController::class, 'destroy'])->name('admin.homework.destroy');
+    Route::get('homework/preview', [HomeworkController::class, 'preview'])->name('admin.homework.preview');
+    Route::put('homework/{id}', [HomeworkController::class, 'update'])->name('admin.homework.update');
+    Route::delete('homework/{id}', [HomeworkController::class, 'destroy'])->name('admin.homework.destroy');
 
-Route::get('homework/assign', [HomeworkController::class, 'assign'])->name('admin.homework.assign');
-Route::post('homework/assign', [HomeworkController::class, 'store'])->name('admin.homework.store');
+    Route::get('homework/assign', [HomeworkController::class, 'assign'])->name('admin.homework.assign');
+    Route::post('homework/assign', [HomeworkController::class, 'store'])->name('admin.homework.store');
 
-Route::get('homework/member', [HomeworkController::class, 'member'])->name('admin.homework.member');
-Route::get('homework/member/download/{id}', [HomeworkController::class, 'downloadHomework'])->name('admin.homework.member.download');
-Route::delete('homework/member/{id}', [HomeworkController::class, 'destroyMember'])->name('admin.homework.member.destroy');
+    Route::get('homework/member', [HomeworkController::class, 'member'])->name('admin.homework.member');
+    Route::get('homework/member/download/{id}', [HomeworkController::class, 'downloadHomework'])->name('admin.homework.member.download');
+    Route::delete('homework/member/{id}', [HomeworkController::class, 'destroyMember'])->name('admin.homework.member.destroy');
+});

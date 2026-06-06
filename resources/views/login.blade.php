@@ -261,6 +261,69 @@
             bottom: -50px;
             left: -50px;
         }
+
+        .remember-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .checkbox-wrapper input[type="checkbox"] {
+            display: none;
+        }
+
+        .custom-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #D1D5DB;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+            background: #F9FAFB;
+        }
+
+        .custom-checkbox i {
+            color: white;
+            font-size: 12px;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.2s ease;
+        }
+
+        .checkbox-wrapper:hover .custom-checkbox {
+            border-color: var(--primary);
+        }
+
+        .checkbox-wrapper input[type="checkbox"]:checked + .custom-checkbox {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .checkbox-wrapper input[type="checkbox"]:checked + .custom-checkbox i {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .remember-text {
+            font-size: 14px;
+            color: #6B7280;
+            user-select: none;
+        }
+
+        .hint-text {
+            font-size: 12px;
+            color: #9CA3AF;
+        }
     </style>
 </head>
 <body>
@@ -315,6 +378,17 @@
                             >
                             <i class="fas fa-lock"></i>
                         </div>
+                    </div>
+
+                    <div class="remember-group">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" name="remember" value="1">
+                            <span class="custom-checkbox">
+                                <i class="fas fa-check"></i>
+                            </span>
+                            <span class="remember-text">长期登录</span>
+                        </label>
+                        <span class="hint-text">7天内无需重复登录</span>
                     </div>
                     
                     <button type="submit" class="btn-login">

@@ -11,5 +11,7 @@ class Menber extends Model
 
     protected $casts = [
         'LoginTime' => 'datetime',
+        'Permission' => 'integer',
+        'Status' => 'integer',
     ];
 }

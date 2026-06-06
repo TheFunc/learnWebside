@@ -254,6 +254,9 @@
             margin-bottom: 0;
             border-bottom: 2px solid #e2e8f0;
             background: var(--card-bg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .content-header h1 {
@@ -271,6 +274,91 @@
             height: 20px;
             background: #3b82f6;
             border-radius: 2px;
+        }
+
+        .header-user {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        .user-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            line-height: 1.2;
+        }
+
+        .user-role {
+            font-size: 11px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-logout {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border: 1px solid #fecaca;
+            border-radius: 10px;
+            color: #dc2626;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            box-shadow: 0 2px 6px rgba(239, 68, 68, 0.1);
+        }
+
+        .btn-logout:hover {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+        }
+
+        .btn-logout:active {
+            transform: translateY(0);
+        }
+
+        .btn-logout i {
+            font-size: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-logout:hover i {
+            transform: translateX(-3px);
         }
 
         .content-body {
@@ -373,6 +461,22 @@
         <div class="content">
             <div class="content-header">
                 <h1>@yield('title')</h1>
+                <div class="header-user">
+                    <div class="user-info">
+                        <div class="user-avatar">{{ mb_substr(session('admin_name', 'A'), 0, 1) }}</div>
+                        <div class="user-details">
+                            <span class="user-name">{{ session('admin_name', 'Admin') }}</span>
+                            <span class="user-role">管理员</span>
+                        </div>
+                    </div>
+                    <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                        @csrf
+                        <button type="submit" class="btn-logout">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            退出登录
+                        </button>
+                    </form>
+                </div>
             </div>
             <div class="content-body">
                 @yield('content')

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Menber;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Config;
 
 class LoginController extends Controller
 {
@@ -43,6 +44,11 @@ class LoginController extends Controller
         Session::put('admin_name', $menber->Name);
         Session::put('is_admin', true);
 
+        if ($request->has('remember') && $request->remember == 1) {
+            Session::put('remember', true);
+            Config::set('session.lifetime', 10080);
+        }
+
         return redirect()->route('admin.member.index');
     }
 
@@ -51,6 +57,7 @@ class LoginController extends Controller
         Session::forget('admin_id');
         Session::forget('admin_name');
         Session::forget('is_admin');
+        Session::forget('remember');
 
         return redirect()->route('login');
     }
