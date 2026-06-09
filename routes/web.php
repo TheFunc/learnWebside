@@ -7,8 +7,20 @@ use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\VideoController;
 use App\Http\Controllers\LoginController;
 
+use App\Http\Controllers\LearnController;
+
 Route::get('/', function () {
     return view('welcome');
+});
+
+// 学习平台前台路由
+Route::middleware('admin.auth')->prefix('learn')->name('learn.')->group(function () {
+    Route::get('/', [LearnController::class, 'index'])->name('index');
+    Route::get('/courses', [LearnController::class, 'courses'])->name('courses');
+    Route::get('/homework', [LearnController::class, 'homework'])->name('homework');
+    Route::get('/navigation', [LearnController::class, 'navigation'])->name('navigation');
+    Route::get('/change-password', [LearnController::class, 'showChangePassword'])->name('change-password');
+    Route::post('/change-password', [LearnController::class, 'changePassword'])->name('change-password.post');
 });
 
 Route::get('rootlogin', [LoginController::class, 'showLoginForm'])->name('login');
