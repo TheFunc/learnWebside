@@ -22,6 +22,8 @@ Route::post('learnLogout', [LearnLoginController::class, 'logout'])->name('learn
 Route::middleware('learn.auth')->prefix('learn')->name('learn.')->group(function () {
     Route::get('/', [LearnController::class, 'index'])->name('index');
     Route::get('/courses', [LearnController::class, 'courses'])->name('courses');
+    Route::get('/watch/{groupId}', [LearnController::class, 'watchVideo'])->name('watch');
+    Route::get('/video/stream/{path}', [LearnController::class, 'streamVideo'])->name('video.stream')->where('path', '.*');
     Route::get('/homework', [LearnController::class, 'homework'])->name('homework');
     Route::get('/navigation', [LearnController::class, 'navigation'])->name('navigation');
     Route::get('/change-password', [LearnController::class, 'showChangePassword'])->name('change-password');
