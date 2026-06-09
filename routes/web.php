@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HomeworkController;
 use App\Http\Controllers\Admin\MemberController;
+use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\VideoController;
 use App\Http\Controllers\LoginController;
 
@@ -47,4 +48,10 @@ Route::middleware('admin.auth')->group(function () {
     Route::get('homework/member', [HomeworkController::class, 'member'])->name('admin.homework.member');
     Route::get('homework/member/download/{id}', [HomeworkController::class, 'downloadHomework'])->name('admin.homework.member.download');
     Route::delete('homework/member/{id}', [HomeworkController::class, 'destroyMember'])->name('admin.homework.member.destroy');
+
+    Route::get('settings', [SettingsController::class, 'index'])->name('admin.settings.index');
+    Route::get('settings/videos', [SettingsController::class, 'getVideos'])->name('admin.settings.videos');
+    Route::post('settings/upload-video', [SettingsController::class, 'uploadVideo'])->name('admin.settings.upload.video');
+    Route::delete('settings/delete-video', [SettingsController::class, 'deleteVideo'])->name('admin.settings.delete.video');
+    Route::get('settings/video/{fileName}', [SettingsController::class, 'streamVideo'])->name('admin.settings.stream.video');
 });

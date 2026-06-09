@@ -132,19 +132,20 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--accent-light);
+            background: rgba(255, 255, 255, 0.12);
             border-radius: 10px;
             font-size: 16px;
-            color: var(--accent);
+            color: rgba(255, 255, 255, 0.95);
             transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
             flex-shrink: 0;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         }
 
         .menu-item > .menu-header:hover .icon {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.25);
             color: #FFFFFF;
             transform: scale(1.08);
-            box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
         }
 
         .menu-item > .menu-header .title {
@@ -232,14 +233,15 @@
             justify-content: center;
             margin-right: 12px;
             font-size: 14px;
-            opacity: 0.7;
+            opacity: 0.75;
+            color: rgba(255, 255, 255, 0.85);
             transition: opacity 0.25s ease;
         }
 
         .sub-menu a:hover .sub-icon,
         .sub-menu a.active .sub-icon {
             opacity: 1;
-            color: var(--accent);
+            color: #FFFFFF;
         }
 
         .content {
@@ -457,6 +459,22 @@
                     </a>
                 </div>
             </div>
+
+            <div class="menu-item">
+                <div class="menu-header" onclick="toggleMenu(this)">
+                    <div class="menu-content">
+                        <i class="icon fa-solid fa-sliders-h"></i>
+                        <span class="title">系统设置</span>
+                    </div>
+                    <span class="arrow">›</span>
+                </div>
+                <div class="sub-menu">
+                    <a href="{{ route('admin.settings.index') }}" {{ request()->routeIs('admin.settings.index') ? 'class=active' : '' }}>
+                        <i class="sub-icon fa-solid fa-cog"></i>
+                        <span>系统配置</span>
+                    </a>
+                </div>
+            </div>
         </div>
         <div class="content">
             <div class="content-header">
@@ -499,6 +517,25 @@
                 const subMenu = menuItem.querySelector('.sub-menu');
                 arrow.classList.add('expanded');
                 subMenu.classList.add('active');
+            }
+
+            const themes = {
+                original: { primary: '#374151', secondary: '#4B5563', accent: '#E5E7EB' },
+                aurora: { primary: '#667eea', secondary: '#764ba2', accent: '#f093fb' },
+                midnight: { primary: '#0f0c29', secondary: '#302b63', accent: '#24243e' },
+                dawn: { primary: '#fa709a', secondary: '#fee140', accent: '#f09819' },
+                galaxy: { primary: '#0c0c0c', secondary: '#1a1a2e', accent: '#16213e' },
+                forest: { primary: '#134e5e', secondary: '#71b280', accent: '#a8e063' },
+                ocean: { primary: '#11998e', secondary: '#38ef7d', accent: '#013220' }
+            };
+
+            const savedTheme = localStorage.getItem('selectedTheme') || 'original';
+            const theme = themes[savedTheme];
+            
+            if (theme) {
+                document.documentElement.style.setProperty('--primary', theme.primary);
+                document.documentElement.style.setProperty('--primary-light', theme.secondary);
+                document.documentElement.style.setProperty('--accent', theme.accent);
             }
         });
     </script>
