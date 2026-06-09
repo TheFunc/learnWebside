@@ -421,8 +421,8 @@
             <!-- 最右侧：用户下拉菜单 -->
             <div class="user-dropdown" x-data="{ open: false }">
                 <div class="user-trigger" @click="open = !open" @click.outside="open = false">
-                    <div class="user-avatar">{{ mb_substr(session('admin_name', 'U'), 0, 1) }}</div>
-                    <span class="user-name">{{ session('admin_name', '用户') }}</span>
+                    <div class="user-avatar">{{ mb_substr(session('learn_user_name', 'U'), 0, 1) }}</div>
+                    <span class="user-name">{{ session('learn_user_name', '用户') }}</span>
                     <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-300"
                        :class="{ 'rotate-180': open }"></i>
                 </div>
@@ -442,7 +442,7 @@
                         <span>修改密码</span>
                     </a>
                     <div class="dropdown-divider"></div>
-                    <form action="{{ route('logout') }}" method="POST">
+                    <form action="{{ route('learn.logout') }}" method="POST">
                         @csrf
                         <button type="submit" class="dropdown-item w-full text-left">
                             <i class="fa-solid fa-right-from-bracket"></i>

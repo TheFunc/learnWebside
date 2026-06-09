@@ -1,32 +1,117 @@
 @extends('learn.layouts')
 
 @section('content')
-<div class="max-w-6xl mx-auto">
-    <!-- 欢迎卡片 -->
-    <div class="relative overflow-hidden rounded-2xl bg-white border border-blue-100 shadow-md p-12 mb-8">
-        <!-- 装饰背景 -->
-        <div class="absolute top-0 right-0 w-64 h-64 bg-blue-100 rounded-full blur-3xl opacity-60"></div>
-        <div class="absolute bottom-0 left-0 w-48 h-48 bg-sky-100 rounded-full blur-3xl opacity-60"></div>
-        
-        <div class="relative z-10">
-            <h1 class="text-4xl font-bold mb-4">
-                <span class="bg-gradient-to-r from-blue-600 to-sky-500 bg-clip-text text-transparent">
-                    欢迎使用学习平台
-                </span>
-            </h1>
-            <p class="text-slate-500 text-lg">
-                在这里，家校情怀 技能报国。开始你的学习之旅吧！
-            </p>
-        </div>
-    </div>
+<div class="homepage-video-container">
+    @if($homepageVideo)
+        {{-- 全屏循环播放视频 --}}
+        <video 
+            id="homepageVideo"
+            class="homepage-video" 
+            autoplay 
+            loop 
+            playsinline
+            controlsList="nodownload nofullscreen noremoteplayback"
+            disablePictureInPicture
+        >
+            <source src="{{ $homepageVideo }}" type="video/mp4">
+            您的浏览器不支持视频播放
+        </video>
 
-    <!-- 占位提示 -->
-    <div class="flex flex-col items-center justify-center py-20">
-        <div class="w-24 h-24 mb-6 rounded-full bg-blue-50 flex items-center justify-center">
-            <i class="fa-solid fa-house text-4xl text-blue-500"></i>
+        {{-- 视频遮罩层（防止右键和交互） --}}
+        <div class="video-overlay"></div>
+    @else
+        {{-- 无视频时的占位提示 --}}
+        <div class="no-video-placeholder">
+            <div class="w-24 h-24 mb-6 rounded-full bg-blue-50 flex items-center justify-center">
+                <i class="fa-solid fa-house text-4xl text-blue-500"></i>
+            </div>
+            <h2 class="text-2xl font-semibold text-slate-600 mb-2">首页</h2>
+            <p class="text-slate-400">管理员尚未设置首页视频</p>
         </div>
-        <h2 class="text-2xl font-semibold text-slate-600 mb-2">首页</h2>
-        <p class="text-slate-400">页面内容开发中，敬请期待...</p>
-    </div>
+    @endif
 </div>
+
+<style>
+    /* 首页主内容区占满剩余空间 */
+    .main-content {
+        padding: 0 !important;
+        min-height: calc(100vh - 100px) !important;
+        height: calc(100vh - 100px) !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    /* 首页视频容器 - 占满主内容区 */
+    .homepage-video-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #000;
+    }
+
+    /* 视频占满容器，完整显示不裁剪 */
+    .homepage-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    /* 遮罩层 - 防止用户与视频交互 */
+    .video-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 3;
+    }
+
+    /* 无视频占位 */
+    .no-video-placeholder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        background: transparent;
+        position: relative;
+        z-index: 2;
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const video = document.getElementById('homepageVideo');
+    if (!video) return;
+
+    // 尝试直接带声音播放
+    video.muted = false;
+    video.volume = 1;
+    video.play().catch(function(error) {
+        console.log('浏览器阻止了有声自动播放:', error);
+        // 如果浏览器阻止，降级为静音播放
+        video.muted = true;
+        video.play().catch(function() {});
+    });
+
+    // 禁止右键菜单
+    video.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
+
+    // 禁止键盘快捷键
+    video.addEventListener('keydown', function(e) {
+        e.preventDefault();
+    });
+
+    // 如果视频暂停了，自动恢复播放
+    video.addEventListener('pause', function() {
+        video.play().catch(function() {});
+    });
+});
+</script>
 @endsection

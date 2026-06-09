@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Menber;
@@ -14,12 +15,26 @@ class LearnController extends Controller
      */
     public function index()
     {
-        // 检查登录状态
-        if (!Session::get('admin_name')) {
-            return redirect()->route('login')->with('error', '请先登录');
+        // 获取后台设置的首页视频
+        $homepageVideo = $this->getHomepageVideo();
+
+        return view('learn.home', compact('homepageVideo'));
+    }
+
+    /**
+     * 获取后台设置的首页视频
+     */
+    private function getHomepageVideo()
+    {
+        $files = Storage::disk('public')->files('homepage');
+
+        if (empty($files)) {
+            return null;
         }
 
-        return view('learn.home');
+        // 取第一个视频文件
+        $fileName = basename($files[0]);
+        return route('admin.settings.stream.video', ['fileName' => $fileName]);
     }
 
     /**
@@ -27,10 +42,6 @@ class LearnController extends Controller
      */
     public function courses()
     {
-        if (!Session::get('admin_name')) {
-            return redirect()->route('login')->with('error', '请先登录');
-        }
-
         return view('learn.courses');
     }
 
@@ -39,10 +50,6 @@ class LearnController extends Controller
      */
     public function homework()
     {
-        if (!Session::get('admin_name')) {
-            return redirect()->route('login')->with('error', '请先登录');
-        }
-
         return view('learn.homework');
     }
 
@@ -51,10 +58,6 @@ class LearnController extends Controller
      */
     public function navigation()
     {
-        if (!Session::get('admin_name')) {
-            return redirect()->route('login')->with('error', '请先登录');
-        }
-
         return view('learn.navigation');
     }
 
@@ -63,10 +66,6 @@ class LearnController extends Controller
      */
     public function showChangePassword()
     {
-        if (!Session::get('admin_name')) {
-            return redirect()->route('login')->with('error', '请先登录');
-        }
-
         return view('learn.change-password');
     }
 
@@ -75,16 +74,12 @@ class LearnController extends Controller
      */
     public function changePassword(Request $request)
     {
-        if (!Session::get('admin_name')) {
-            return redirect()->route('login')->with('error', '请先登录');
-        }
-
         $request->validate([
             'old_password' => 'required|string',
             'new_password' => 'required|string|min:6|confirmed',
         ]);
 
-        $adminId = Session::get('admin_id');
+        $adminId = Session::get('learn_user_id');
         $menber = Menber::find($adminId);
 
         if (!$menber) {

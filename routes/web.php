@@ -6,15 +6,20 @@ use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\VideoController;
 use App\Http\Controllers\LoginController;
-
+use App\Http\Controllers\LearnLoginController;
 use App\Http\Controllers\LearnController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-// 学习平台前台路由
-Route::middleware('admin.auth')->prefix('learn')->name('learn.')->group(function () {
+// 学习平台登录路由（无需认证）
+Route::get('learnLogin', [LearnLoginController::class, 'showLoginForm'])->name('learn.login');
+Route::post('learnLogin', [LearnLoginController::class, 'login'])->name('learn.login.post');
+Route::post('learnLogout', [LearnLoginController::class, 'logout'])->name('learn.logout');
+
+// 学习平台前台路由（需要认证）
+Route::middleware('learn.auth')->prefix('learn')->name('learn.')->group(function () {
     Route::get('/', [LearnController::class, 'index'])->name('index');
     Route::get('/courses', [LearnController::class, 'courses'])->name('courses');
     Route::get('/homework', [LearnController::class, 'homework'])->name('homework');
@@ -26,6 +31,9 @@ Route::middleware('admin.auth')->prefix('learn')->name('learn.')->group(function
 Route::get('rootlogin', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('rootlogin', [LoginController::class, 'login'])->name('login');
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+// 首页视频流路由（无需认证，供学习平台使用）
+Route::get('settings/video/{fileName}', [SettingsController::class, 'streamVideo'])->name('admin.settings.stream.video');
 
 Route::middleware('admin.auth')->group(function () {
     Route::resource('root', MemberController::class)->only(['index', 'create', 'store'])->names([
@@ -65,5 +73,4 @@ Route::middleware('admin.auth')->group(function () {
     Route::get('settings/videos', [SettingsController::class, 'getVideos'])->name('admin.settings.videos');
     Route::post('settings/upload-video', [SettingsController::class, 'uploadVideo'])->name('admin.settings.upload.video');
     Route::delete('settings/delete-video', [SettingsController::class, 'deleteVideo'])->name('admin.settings.delete.video');
-    Route::get('settings/video/{fileName}', [SettingsController::class, 'streamVideo'])->name('admin.settings.stream.video');
 });
