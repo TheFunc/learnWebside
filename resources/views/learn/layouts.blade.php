@@ -6,19 +6,17 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>家校情怀 技能报国 - 学习平台</title>
     
-    <!-- 引入 Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Tailwind CSS -->
+    <link rel="stylesheet" href="{{ asset('build/assets/app-BHPn_HJv.css') }}">
     
     <!-- 引入 Font Awesome 图标库 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('css/fontawesome.min.css') }}">
     
     <!-- 引入 Google Fonts: Noto Sans SC（正文）+ Orbitron（科技感标题） -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/google-fonts.css') }}">
     
     <!-- 引入 Alpine.js 轻量级交互框架 -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="{{ asset('js/alpine.min.js') }}"></script>
     
     <style>
         /* ========== 全局变量 ========== */
