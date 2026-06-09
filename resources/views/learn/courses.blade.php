@@ -2,6 +2,20 @@
 
 @section('content')
 <div class="courses-page">
+    {{-- 课程标语横幅 --}}
+    <div class="course-hero">
+        <div class="hero-pattern"></div>
+        <div class="hero-content">
+            <div class="hero-icon">
+                <i class="fa-solid fa-book-open-reader"></i>
+            </div>
+            <h1 class="hero-title">学无止境，技以立身</h1>
+            <p class="hero-subtitle">每一次学习都是成长的阶梯，每一段视频都承载着知识的重量</p>
+            <div class="hero-divider"></div>
+        </div>
+        <div class="hero-glow"></div>
+    </div>
+
     {{-- 类型菜单栏 --}}
     <div class="type-menu">
         <div class="type-menu-inner">
@@ -76,6 +90,112 @@
     .courses-page {
         max-width: 1280px;
         margin: 0 auto;
+    }
+
+    /* ========== 课程标语横幅 ========== */
+    .course-hero {
+        position: relative;
+        margin-bottom: 32px;
+        padding: 48px 40px;
+        background: linear-gradient(135deg, #ffffff 0%, var(--blue-50) 40%, var(--blue-100) 100%);
+        border-radius: 20px;
+        border: 1px solid var(--border-color);
+        overflow: hidden;
+        box-shadow: var(--shadow-md);
+        text-align: center;
+    }
+
+    /* 背景几何图案 */
+    .hero-pattern {
+        position: absolute;
+        inset: 0;
+        opacity: 0.04;
+        background-image: 
+            radial-gradient(circle at 20% 50%, var(--blue-500) 1px, transparent 1px),
+            radial-gradient(circle at 80% 20%, var(--accent-cyan) 1px, transparent 1px),
+            radial-gradient(circle at 60% 80%, var(--blue-400) 1px, transparent 1px);
+        background-size: 40px 40px, 60px 60px, 50px 50px;
+        pointer-events: none;
+    }
+
+    /* 内容区域 */
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    /* 图标 */
+    .hero-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 16px;
+        background: linear-gradient(135deg, var(--blue-500), var(--accent-cyan));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 24px rgba(59, 130, 246, 0.25);
+        animation: heroIconPulse 3s ease-in-out infinite;
+    }
+
+    .hero-icon i {
+        font-size: 1.6rem;
+        color: white;
+    }
+
+    @keyframes heroIconPulse {
+        0%, 100% { transform: scale(1); box-shadow: 0 8px 24px rgba(59, 130, 246, 0.25); }
+        50% { transform: scale(1.05); box-shadow: 0 12px 32px rgba(59, 130, 246, 0.35); }
+    }
+
+    /* 标题 */
+    .hero-title {
+        font-family: 'Noto Sans SC', sans-serif;
+        font-weight: 900;
+        font-size: 1.75rem;
+        letter-spacing: 0.12em;
+        margin: 0 0 12px;
+        background: linear-gradient(
+            135deg,
+            var(--blue-600) 0%,
+            var(--accent-cyan) 50%,
+            var(--blue-500) 100%
+        );
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: gradientShift 4s linear infinite;
+    }
+
+    /* 副标题 */
+    .hero-subtitle {
+        font-size: 0.95rem;
+        color: var(--text-secondary);
+        margin: 0 0 16px;
+        letter-spacing: 0.05em;
+        line-height: 1.6;
+    }
+
+    /* 装饰分隔线 */
+    .hero-divider {
+        width: 80px;
+        height: 3px;
+        margin: 0 auto;
+        background: linear-gradient(90deg, transparent, var(--blue-400), var(--accent-cyan), var(--blue-400), transparent);
+        border-radius: 2px;
+    }
+
+    /* 底部发光效果 */
+    .hero-glow {
+        position: absolute;
+        bottom: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60%;
+        height: 40px;
+        background: radial-gradient(ellipse, rgba(59, 130, 246, 0.15), transparent 70%);
+        pointer-events: none;
     }
 
     /* 类型菜单栏 */
