@@ -539,6 +539,10 @@
                        class="nav-item {{ request()->routeIs('learn.courses') ? 'active' : '' }}">
                         <i class="fa-solid fa-graduation-cap"></i>课程学习
                     </a>
+                    <a href="{{ route('learn.external') }}" 
+                       class="nav-item {{ request()->routeIs('learn.external') ? 'active' : '' }}">
+                        <i class="fa-solid fa-link"></i>外部学习
+                    </a>
                     <a href="{{ route('learn.homework') }}" 
                        class="nav-item {{ request()->routeIs('learn.homework') ? 'active' : '' }}">
                         <i class="fa-solid fa-book-open"></i>作业

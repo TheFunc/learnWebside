@@ -14,6 +14,8 @@ use App\Models\VideoInfo;
 use App\Models\VideoCover;
 use App\Models\Homework;
 use App\Models\HomeworkMen;
+use App\Models\ExternalType;
+use App\Models\ExternalInfo;
 
 class LearnController extends Controller
 {
@@ -189,6 +191,34 @@ class LearnController extends Controller
     public function navigation()
     {
         return view('learn.navigation');
+    }
+
+    /**
+     * 外部学习页面
+     */
+    public function external(Request $request)
+    {
+        $typeId = $request->integer('type_id');
+
+        $externalTypes = ExternalType::all();
+
+        $query = ExternalInfo::with('externalType');
+
+        if ($typeId) {
+            $query->where('type', ExternalType::find($typeId)?->type);
+        }
+
+        $externalLinks = $query->get()
+            ->groupBy('type')
+            ->map(function ($group, $type) {
+                return [
+                    'type' => $type,
+                    'links' => $group,
+                    'count' => $group->count(),
+                ];
+            })->values();
+
+        return view('learn.external', compact('externalTypes', 'externalLinks', 'typeId'));
     }
 
     /**

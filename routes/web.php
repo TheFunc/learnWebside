@@ -29,6 +29,7 @@ Route::middleware('learn.auth')->prefix('learn')->name('learn.')->group(function
     Route::get('/homework/download/{id}', [LearnController::class, 'downloadHomework'])->name('homework.download');
     Route::post('/homework/upload/{id}', [LearnController::class, 'uploadHomework'])->name('homework.upload');
     Route::get('/navigation', [LearnController::class, 'navigation'])->name('navigation');
+    Route::get('/external', [LearnController::class, 'external'])->name('external');
     Route::get('/change-password', [LearnController::class, 'showChangePassword'])->name('change-password');
     Route::post('/change-password', [LearnController::class, 'changePassword'])->name('change-password.post');
     Route::post('/record-watch-time', [LearnController::class, 'recordWatchTime'])->name('record.watch.time');
@@ -67,6 +68,12 @@ Route::middleware('admin.auth')->group(function () {
     Route::get('external/course', [ExternalController::class, 'course'])->name('admin.external.course');
     Route::get('external/manage', [ExternalController::class, 'manage'])->name('admin.external.manage');
     Route::get('external/create', [ExternalController::class, 'create'])->name('admin.external.create');
+    Route::post('external/type', [ExternalController::class, 'storeType'])->name('admin.external.type.store');
+    Route::put('external/type/{id}', [ExternalController::class, 'updateType'])->name('admin.external.type.update');
+    Route::delete('external/type/{id}', [ExternalController::class, 'destroyType'])->name('admin.external.type.destroy');
+    Route::post('external', [ExternalController::class, 'store'])->name('admin.external.store');
+    Route::put('external/{id}', [ExternalController::class, 'update'])->name('admin.external.update');
+    Route::delete('external/{id}', [ExternalController::class, 'destroy'])->name('admin.external.destroy');
 
     Route::get('homework/preview', [HomeworkController::class, 'preview'])->name('admin.homework.preview');
     Route::put('homework/{id}', [HomeworkController::class, 'update'])->name('admin.homework.update');
