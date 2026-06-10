@@ -328,6 +328,139 @@
             margin: 4px 0;
         }
 
+        /* ========== 修改密码模态框 ========== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        .modal-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 32px;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            animation: modalIn 0.3s ease;
+        }
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .modal-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        .modal-close-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: #f1f5f9;
+            border-radius: 50%;
+            font-size: 16px;
+            color: #64748b;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .modal-close-btn:hover {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+        .modal-msg {
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .modal-msg-success {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #16a34a;
+        }
+        .modal-msg-error {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+        }
+        .modal-field {
+            margin-bottom: 16px;
+        }
+        .modal-field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 6px;
+        }
+        .modal-field label i {
+            width: 14px;
+            margin-right: 4px;
+            color: #3b82f6;
+        }
+        .modal-field input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+            box-sizing: border-box;
+        }
+        .modal-field input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+        .modal-btn-cancel, .modal-btn-confirm {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .modal-btn-cancel {
+            background: #f1f5f9;
+            color: #475569;
+        }
+        .modal-btn-cancel:hover {
+            background: #e2e8f0;
+        }
+        .modal-btn-confirm {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        .modal-btn-confirm:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+        }
+
         /* ========== 主内容区域 ========== */
         .main-content {
             position: relative;
@@ -427,10 +560,10 @@
 
                 <!-- 下拉菜单 -->
                 <div class="dropdown-menu" id="dropdownMenu" style="display: none;">
-                    <a href="{{ route('learn.change-password') }}" class="dropdown-item">
+                    <button type="button" onclick="openChangePasswordModal()" class="dropdown-item">
                         <i class="fa-solid fa-key"></i>
                         <span>修改密码</span>
-                    </a>
+                    </button>
                     <div class="dropdown-divider"></div>
                     <form action="{{ route('learn.logout') }}" method="POST">
                         @csrf
@@ -451,6 +584,46 @@
 
     <!-- 全局弹窗容器（body 直接子元素，避免 transform 影响 fixed 定位） -->
     @yield('modal')
+
+    <!-- 修改密码模态框 -->
+    <div id="changePasswordModal" class="modal-overlay" style="display: none;">
+        <div class="modal-card">
+            <div class="modal-header-row">
+                <h3 class="modal-title"><i class="fa-solid fa-key"></i> 修改密码</h3>
+                <button onclick="closeChangePasswordModal()" class="modal-close-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            @if(session('pwd_success'))
+            <div class="modal-msg modal-msg-success"><i class="fa-solid fa-check-circle"></i> {{ session('pwd_success') }}</div>
+            @endif
+            @if(session('pwd_error'))
+            <div class="modal-msg modal-msg-error"><i class="fa-solid fa-exclamation-circle"></i> {{ session('pwd_error') }}</div>
+            @endif
+            @if($errors->any())
+            <div class="modal-msg modal-msg-error"><i class="fa-solid fa-exclamation-circle"></i> {{ $errors->first() }}</div>
+            @endif
+
+            <form action="{{ route('learn.change-password.post') }}" method="POST" id="changePwdForm">
+                @csrf
+                <div class="modal-field">
+                    <label><i class="fa-solid fa-lock"></i> 旧密码</label>
+                    <input type="password" name="old_password" required placeholder="请输入旧密码">
+                </div>
+                <div class="modal-field">
+                    <label><i class="fa-solid fa-key"></i> 新密码</label>
+                    <input type="password" name="new_password" required minlength="6" placeholder="至少6位">
+                </div>
+                <div class="modal-field">
+                    <label><i class="fa-solid fa-shield-halved"></i> 确认新密码</label>
+                    <input type="password" name="new_password_confirmation" required minlength="6" placeholder="再次输入新密码">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" onclick="closeChangePasswordModal()" class="modal-btn-cancel">取消</button>
+                    <button type="submit" class="modal-btn-confirm">确认修改</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- 页面加载动画 -->
     <script>
@@ -490,6 +663,26 @@
                     }
                 });
             }
+
+            // 如果有 session 提示或验证错误，自动打开修改密码弹窗
+            @if(session('pwd_success') || session('pwd_error') || $errors->any())
+            openChangePasswordModal();
+            @endif
+        });
+
+        function openChangePasswordModal() {
+            document.getElementById('changePasswordModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeChangePasswordModal() {
+            document.getElementById('changePasswordModal').style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        // 点击遮罩关闭
+        document.getElementById('changePasswordModal')?.addEventListener('click', function(e) {
+            if (e.target === this) closeChangePasswordModal();
         });
     </script>
 </body>

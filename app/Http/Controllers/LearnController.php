@@ -239,16 +239,16 @@ class LearnController extends Controller
         $menber = Menber::find($adminId);
 
         if (!$menber) {
-            return back()->withErrors(['error' => '用户不存在']);
+            return back()->with('pwd_error', '用户不存在');
         }
 
         if ($menber->Password !== $request->old_password) {
-            return back()->withErrors(['error' => '旧密码不正确']);
+            return back()->with('pwd_error', '旧密码不正确');
         }
 
         $menber->Password = $request->new_password;
         $menber->save();
 
-        return back()->with('success', '密码修改成功');
+        return back()->with('pwd_success', '密码修改成功');
     }
 }
