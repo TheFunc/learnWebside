@@ -351,14 +351,55 @@
 document.addEventListener('DOMContentLoaded', function() {
     const videoList = document.querySelectorAll('.playlist-item');
     let currentPlayer = null;
+    let watchTimer = null;
+    let watchedSeconds = 0;
+    const REPORT_INTERVAL = 30; // 每 30 秒上报一次
+
+    // 上报学习时间
+    function reportWatchTime() {
+        if (watchedSeconds <= 0) return;
+
+        fetch('{{ route("learn.record.watch.time") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ seconds: watchedSeconds })
+        }).catch(() => {});
+
+        watchedSeconds = 0;
+    }
+
+    // 页面离开时上报剩余时间
+    window.addEventListener('beforeunload', function() {
+        if (watchTimer) clearInterval(watchTimer);
+        if (watchedSeconds > 0) {
+            const blob = new Blob(
+                [JSON.stringify({ seconds: watchedSeconds })],
+                { type: 'application/json' }
+            );
+            navigator.sendBeacon('{{ route("learn.record.watch.time") }}', blob);
+        }
+    });
 
     function initPlayer(videoUrl, coverUrl) {
         const container = document.getElementById('dplayer');
-        
-        // 销毁旧实例
+
+        // 清除旧的计时器
+        if (watchTimer) {
+            clearInterval(watchTimer);
+            watchTimer = null;
+        }
+
+        // 销毁旧实例前上报剩余时间
         if (currentPlayer) {
+            reportWatchTime();
             currentPlayer.destroy();
         }
+
+        // 重置计时器
+        watchedSeconds = 0;
 
         const options = {
             container: container,
@@ -378,6 +419,18 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         currentPlayer = new DPlayer(options);
+
+        // 每秒检查一次：如果视频正在播放，累加 1 秒
+        watchTimer = setInterval(function() {
+            if (currentPlayer && !currentPlayer.video.paused) {
+                watchedSeconds++;
+
+                // 达到上报间隔时上报
+                if (watchedSeconds >= REPORT_INTERVAL) {
+                    reportWatchTime();
+                }
+            }
+        }, 1000);
     }
 
     // 初始化第一个视频

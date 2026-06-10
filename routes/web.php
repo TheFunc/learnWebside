@@ -30,6 +30,7 @@ Route::middleware('learn.auth')->prefix('learn')->name('learn.')->group(function
     Route::get('/navigation', [LearnController::class, 'navigation'])->name('navigation');
     Route::get('/change-password', [LearnController::class, 'showChangePassword'])->name('change-password');
     Route::post('/change-password', [LearnController::class, 'changePassword'])->name('change-password.post');
+    Route::post('/record-watch-time', [LearnController::class, 'recordWatchTime'])->name('record.watch.time');
 });
 
 Route::get('rootlogin', [LoginController::class, 'showLoginForm'])->name('login');

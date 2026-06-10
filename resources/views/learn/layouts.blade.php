@@ -105,7 +105,7 @@
         /* ========== 顶部Header区域 ========== */
         .learn-header {
             position: relative;
-            z-index: 10;
+            z-index: 50;
             background: linear-gradient(135deg, #ffffff 0%, var(--blue-50) 50%, #dbeafe 100%);
             border-bottom: 1px solid var(--border-color);
             box-shadow: var(--shadow-md);
@@ -297,6 +297,7 @@
             padding: 8px;
             box-shadow: var(--shadow-lg);
             z-index: 100;
+            pointer-events: auto;
         }
 
         .dropdown-item {
@@ -417,24 +418,15 @@
             </div>
 
             <!-- 最右侧：用户下拉菜单 -->
-            <div class="user-dropdown" x-data="{ open: false }">
-                <div class="user-trigger" @click="open = !open" @click.outside="open = false">
+            <div class="user-dropdown" id="userDropdown">
+                <div class="user-trigger" id="userTrigger">
                     <div class="user-avatar">{{ mb_substr(session('learn_user_name', 'U'), 0, 1) }}</div>
                     <span class="user-name">{{ session('learn_user_name', '用户') }}</span>
-                    <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-300"
-                       :class="{ 'rotate-180': open }"></i>
+                    <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-300" id="dropdownArrow"></i>
                 </div>
 
                 <!-- 下拉菜单 -->
-                <div class="dropdown-menu" 
-                     x-show="open" 
-                     x-transition:enter="transition ease-out duration-200"
-                     x-transition:enter-start="opacity-0 scale-95 -translate-y-2"
-                     x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-                     x-transition:leave="transition ease-in duration-150"
-                     x-transition:leave-start="opacity-100 scale-100 translate-y-0"
-                     x-transition:leave-end="opacity-0 scale-95 -translate-y-2"
-                     style="display: none;">
+                <div class="dropdown-menu" id="dropdownMenu" style="display: none;">
                     <a href="{{ route('learn.change-password') }}" class="dropdown-item">
                         <i class="fa-solid fa-key"></i>
                         <span>修改密码</span>
@@ -474,6 +466,29 @@
                     mainContent.style.opacity = '1';
                     mainContent.style.transform = 'translateY(0)';
                 }, 100);
+            }
+
+            // 用户下拉菜单
+            const userTrigger = document.getElementById('userTrigger');
+            const dropdownMenu = document.getElementById('dropdownMenu');
+            const dropdownArrow = document.getElementById('dropdownArrow');
+            const userDropdown = document.getElementById('userDropdown');
+
+            if (userTrigger && dropdownMenu && dropdownArrow) {
+                userTrigger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const isOpen = dropdownMenu.style.display === 'block';
+                    dropdownMenu.style.display = isOpen ? 'none' : 'block';
+                    dropdownArrow.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+                });
+
+                // 点击外部关闭
+                document.addEventListener('click', function(e) {
+                    if (!userDropdown.contains(e.target)) {
+                        dropdownMenu.style.display = 'none';
+                        dropdownArrow.style.transform = 'rotate(0deg)';
+                    }
+                });
             }
         });
     </script>

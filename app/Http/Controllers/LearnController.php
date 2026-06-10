@@ -192,6 +192,32 @@ class LearnController extends Controller
     }
 
     /**
+     * 记录学习时间
+     */
+    public function recordWatchTime(Request $request)
+    {
+        $userId = Session::get('learn_user_id');
+        if (!$userId) {
+            return response()->json(['success' => false, 'message' => '未登录'], 401);
+        }
+
+        $seconds = $request->input('seconds', 0);
+        if ($seconds <= 0) {
+            return response()->json(['success' => false, 'message' => '无效的时间'], 400);
+        }
+
+        $menber = Menber::find($userId);
+        if (!$menber) {
+            return response()->json(['success' => false, 'message' => '用户不存在'], 404);
+        }
+
+        $menber->LearnTime += (int) $seconds;
+        $menber->save();
+
+        return response()->json(['success' => true, 'learn_time' => $menber->LearnTime]);
+    }
+
+    /**
      * 修改密码页面
      */
     public function showChangePassword()

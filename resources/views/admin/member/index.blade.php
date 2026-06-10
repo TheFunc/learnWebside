@@ -577,7 +577,15 @@
                             <i class="fa-solid fa-circle" style="font-size: 8px;"></i> {{ $member->Status == 1 ? '在线' : '离开' }}
                         </span>
                     </td>
-                    <td>{{ $member->LearnTime }} 小时</td>
+                    <td>
+                        @php
+                            $seconds = $member->LearnTime ?? 0;
+                            $hours = floor($seconds / 3600);
+                            $minutes = floor(($seconds % 3600) / 60);
+                            $secs = $seconds % 60;
+                        @endphp
+                        {{ sprintf('%d:%02d:%02d', $hours, $minutes, $secs) }}
+                    </td>
                     <td>{{ $member->LoginTime ? $member->LoginTime->format('Y-m-d H:i') : '从未登录' }}</td>
                     <td>
                         <button onclick="openPasswordModal({{ $member->id }}, '{{ $member->Name }}')" 

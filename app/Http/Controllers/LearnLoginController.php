@@ -28,10 +28,6 @@ class LearnLoginController extends Controller
             return back()->withErrors(['error' => '用户名或密码错误'])->withInput();
         }
 
-        if ($menber->Status != 1) {
-            return back()->withErrors(['error' => '账号已被禁用'])->withInput();
-        }
-
         $menber->LoginTime = now();
         $menber->save();
 
