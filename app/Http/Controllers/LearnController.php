@@ -12,6 +12,8 @@ use App\Models\Menber;
 use App\Models\VideoType;
 use App\Models\VideoInfo;
 use App\Models\VideoCover;
+use App\Models\Homework;
+use App\Models\HomeworkMen;
 
 class LearnController extends Controller
 {
@@ -117,7 +119,68 @@ class LearnController extends Controller
      */
     public function homework()
     {
-        return view('learn.homework');
+        $homeworks = Homework::paginate(10);
+
+        return view('learn.homework', compact('homeworks'));
+    }
+
+    /**
+     * 下载作业文件
+     */
+    public function downloadHomework(int $id)
+    {
+        $homework = Homework::findOrFail($id);
+
+        $folderPath = storage_path('app/public/' . $homework->Path);
+
+        if (!is_dir($folderPath)) {
+            abort(404, '作业文件不存在');
+        }
+
+        $files = glob($folderPath . '/*');
+
+        if (empty($files)) {
+            abort(404, '作业文件夹为空');
+        }
+
+        $filePath = $files[0];
+        $fileName = basename($filePath);
+
+        return response()->download($filePath, $fileName);
+    }
+
+    /**
+     * 上传作业
+     */
+    public function uploadHomework(Request $request, int $id)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:zip,7z,rar,tar,gz,bz2|max:52428800',
+        ]);
+
+        $homework = Homework::findOrFail($id);
+
+        $file = $request->file('file');
+        $originalFilename = $file->getClientOriginalName();
+
+        $userName = session('learn_user_name', '未知用户');
+        $folderName = $userName . '_' . date('YmdHis') . '_' . $homework->Title;
+
+        $storagePath = storage_path('app/public/homework/' . $folderName);
+        if (!file_exists($storagePath)) {
+            mkdir($storagePath, 0755, true);
+        }
+
+        $path = 'homework/' . $folderName . '/' . $originalFilename;
+        $file->move($storagePath, $originalFilename);
+
+        HomeworkMen::create([
+            'Name' => $userName,
+            'Title' => $homework->Title,
+            'Path' => $path,
+        ]);
+
+        return back()->with('success', '作业上传成功');
     }
 
     /**

@@ -111,19 +111,13 @@ class HomeworkController extends Controller
     {
         $homeworkMen = HomeworkMen::findOrFail($id);
         $path = $homeworkMen->Path;
-        
+
         if (!Storage::disk('public')->exists($path)) {
             abort(404, '文件不存在');
         }
 
-        $files = Storage::disk('public')->files($path);
-        if (empty($files)) {
-            abort(404, '文件夹为空');
-        }
-
-        $filePath = $files[0];
-        $fileContents = Storage::disk('public')->get($filePath);
-        $fileName = basename($filePath);
+        $fileContents = Storage::disk('public')->get($path);
+        $fileName = basename($path);
 
         return Response::make($fileContents, 200, [
             'Content-Type' => 'application/octet-stream',
@@ -134,11 +128,19 @@ class HomeworkController extends Controller
     public function destroyMember($id)
     {
         $homeworkMen = HomeworkMen::findOrFail($id);
-        
+
         if (Storage::disk('public')->exists($homeworkMen->Path)) {
-            Storage::disk('public')->deleteDirectory($homeworkMen->Path);
+            Storage::disk('public')->delete($homeworkMen->Path);
         }
-        
+
+        $folderPath = dirname($homeworkMen->Path);
+        if (Storage::disk('public')->exists($folderPath)) {
+            $remainingFiles = Storage::disk('public')->files($folderPath);
+            if (empty($remainingFiles)) {
+                Storage::disk('public')->deleteDirectory($folderPath);
+            }
+        }
+
         $homeworkMen->delete();
 
         return response()->json(['success' => true, 'message' => '作业删除成功！']);
