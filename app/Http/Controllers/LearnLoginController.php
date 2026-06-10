@@ -29,6 +29,7 @@ class LearnLoginController extends Controller
         }
 
         $menber->LoginTime = now();
+        $menber->Status = 1;
         $menber->save();
 
         Session::put('learn_user_id', $menber->id);
@@ -44,6 +45,15 @@ class LearnLoginController extends Controller
 
     public function logout()
     {
+        $userId = Session::get('learn_user_id');
+        if ($userId) {
+            $menber = Menber::find($userId);
+            if ($menber) {
+                $menber->Status = 0;
+                $menber->save();
+            }
+        }
+
         Session::forget('learn_user_id');
         Session::forget('learn_user_name');
         Session::forget('learn_remember');

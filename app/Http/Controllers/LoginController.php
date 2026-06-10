@@ -38,6 +38,7 @@ class LoginController extends Controller
         }
 
         $menber->LoginTime = now();
+        $menber->Status = 1;
         $menber->save();
 
         Session::put('admin_id', $menber->id);
@@ -54,6 +55,15 @@ class LoginController extends Controller
 
     public function logout()
     {
+        $adminId = Session::get('admin_id');
+        if ($adminId) {
+            $menber = Menber::find($adminId);
+            if ($menber) {
+                $menber->Status = 0;
+                $menber->save();
+            }
+        }
+
         Session::forget('admin_id');
         Session::forget('admin_name');
         Session::forget('is_admin');
