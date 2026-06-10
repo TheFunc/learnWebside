@@ -145,6 +145,24 @@
             background: #e2e8f0;
             transform: translateY(-1px);
         }
+        .error-alert {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 16px;
+            margin-bottom: 24px;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 12px;
+            color: #dc2626;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .error-alert i {
+            font-size: 18px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
     </style>
 
     <div class="form-container">
@@ -152,9 +170,21 @@
             @csrf
             <h2 class="form-title">增加成员</h2>
             
+            {{-- 错误提示 --}}
+            @if($errors->any())
+            <div class="error-alert">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <div>
+                    @foreach($errors->all() as $error)
+                        <div>{{ $error }}</div>
+                    @endforeach
+                </div>
+            </div>
+            @endif
+            
             <div class="form-group">
                 <label class="form-label">名称</label>
-                <input type="text" name="name" required class="form-input" placeholder="请输入成员名称">
+                <input type="text" name="name" required class="form-input" placeholder="请输入成员名称" value="{{ old('name') }}">
             </div>
             
             <div class="form-group">
