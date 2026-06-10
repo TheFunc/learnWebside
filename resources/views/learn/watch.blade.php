@@ -420,6 +420,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
         currentPlayer = new DPlayer(options);
 
+        // 监听视频播放结束，自动播放下一个
+        currentPlayer.on('ended', function() {
+            const currentIndex = Array.from(videoList).findIndex(item => item.classList.contains('active'));
+            const nextIndex = currentIndex + 1;
+            if (nextIndex < videoList.length) {
+                const nextItem = videoList[nextIndex];
+                window.switchVideo(nextItem);
+            }
+        });
+
         // 每秒检查一次：如果视频正在播放，累加 1 秒
         watchTimer = setInterval(function() {
             if (currentPlayer && !currentPlayer.video.paused) {

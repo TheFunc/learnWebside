@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\ExternalController;
 use App\Http\Controllers\Admin\HomeworkController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\SettingsController;
@@ -62,6 +63,10 @@ Route::middleware('admin.auth')->group(function () {
     Route::post('video/upload-video', [VideoController::class, 'uploadVideo'])->name('admin.video.upload.video');
     Route::post('video/save-info', [VideoController::class, 'saveVideoInfo'])->name('admin.video.save.info');
     Route::get('video/stream/{path}', [VideoController::class, 'streamVideo'])->name('admin.video.stream')->where('path', '.*');
+
+    Route::get('external/course', [ExternalController::class, 'course'])->name('admin.external.course');
+    Route::get('external/manage', [ExternalController::class, 'manage'])->name('admin.external.manage');
+    Route::get('external/create', [ExternalController::class, 'create'])->name('admin.external.create');
 
     Route::get('homework/preview', [HomeworkController::class, 'preview'])->name('admin.homework.preview');
     Route::put('homework/{id}', [HomeworkController::class, 'update'])->name('admin.homework.update');
