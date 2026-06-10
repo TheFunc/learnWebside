@@ -99,11 +99,10 @@ class SettingsController extends Controller
         $fileSize = filesize($fullPath);
         $mimeType = mime_content_type($fullPath) ?: 'video/mp4';
 
-        $headers = [
-            'Content-Type' => $mimeType,
-            'Accept-Ranges' => 'bytes',
-            'Cache-Control' => 'public, max-age=86400',
-        ];
+        // 关闭 session 锁，避免视频流传输阻塞其他页面请求
+        if (session()->isStarted()) {
+            session()->save();
+        }
 
         $range = request()->header('Range');
 
@@ -122,8 +121,13 @@ class SettingsController extends Controller
 
             $length = $end - $start + 1;
 
-            $headers['Content-Length'] = $length;
-            $headers['Content-Range'] = 'bytes ' . $start . '-' . $end . '/' . $fileSize;
+            $headers = [
+                'Content-Type' => $mimeType,
+                'Accept-Ranges' => 'bytes',
+                'Content-Length' => $length,
+                'Content-Range' => 'bytes ' . $start . '-' . $end . '/' . $fileSize,
+                'Cache-Control' => 'public, max-age=86400',
+            ];
 
             $stream = fopen($fullPath, 'rb');
             fseek($stream, $start);
@@ -143,7 +147,11 @@ class SettingsController extends Controller
             }, 206, $headers);
         }
 
-        $headers['Content-Length'] = $fileSize;
-        return response()->file($fullPath, $headers);
+        // 无 Range 请求时，直接返回文件，让浏览器自行发起 Range 请求
+        return response()->file($fullPath, [
+            'Content-Type' => $mimeType,
+            'Accept-Ranges' => 'bytes',
+            'Cache-Control' => 'public, max-age=86400',
+        ]);
     }
 }

@@ -7,8 +7,8 @@
         <video 
             id="homepageVideo"
             class="homepage-video" 
-            autoplay 
-            loop 
+            preload="auto"
+            loop
             playsinline
             controlsList="nodownload nofullscreen noremoteplayback"
             disablePictureInPicture
@@ -108,9 +108,13 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
     });
 
-    // 如果视频暂停了，自动恢复播放
-    video.addEventListener('pause', function() {
-        video.play().catch(function() {});
+    // 点击导航链接时立即暂停视频，确保页面切换不被阻塞
+    document.querySelectorAll('.nav-item').forEach(function(link) {
+        link.addEventListener('click', function() {
+            video.pause();
+            video.src = '';
+            video.load();
+        });
     });
 });
 </script>
