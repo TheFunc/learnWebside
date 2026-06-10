@@ -685,5 +685,90 @@
 .tool-item:hover .tool-label {
     color: var(--blue-600);
 }
+
+/* ========== 移动端适配 ========== */
+@media (max-width: 768px) {
+    .nav-hero {
+        padding: 32px 20px;
+        margin-bottom: 20px;
+    }
+
+    .nav-hero .hero-icon {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 12px;
+    }
+
+    .nav-hero .hero-icon i {
+        font-size: 1.2rem;
+    }
+
+    .nav-hero .hero-title {
+        font-size: 1.25rem;
+    }
+
+    .nav-hero .hero-subtitle {
+        font-size: 0.85rem;
+    }
+
+    .category-row {
+        padding: 16px;
+        margin-bottom: 16px;
+    }
+
+    .category-header {
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+    }
+
+    .category-icon {
+        width: 32px;
+        height: 32px;
+        margin-right: 8px;
+    }
+
+    .category-icon i {
+        font-size: 0.85rem;
+    }
+
+    .category-title {
+        font-size: 1rem;
+    }
+
+    .tools-scroll {
+        gap: 8px;
+        justify-content: flex-start;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 8px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .tools-scroll::-webkit-scrollbar {
+        display: none;
+    }
+
+    .tool-item {
+        width: 90px;
+        padding: 12px 8px;
+        flex-shrink: 0;
+    }
+
+    .tool-icon {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 6px;
+    }
+
+    .tool-svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .tool-label {
+        font-size: 0.75rem;
+    }
+}
 </style>
 @endsection

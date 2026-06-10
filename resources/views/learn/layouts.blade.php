@@ -126,6 +126,178 @@
             );
         }
 
+        /* 汉堡菜单按钮 */
+        .hamburger-btn {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: var(--bg-card);
+            border-radius: 10px;
+            cursor: pointer;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-btn span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: var(--text-primary);
+            border-radius: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* 移动端导航抽屉 */
+        .mobile-nav-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .mobile-nav-drawer {
+            position: fixed;
+            top: 0;
+            right: -280px;
+            width: 280px;
+            height: 100%;
+            background: var(--bg-card);
+            z-index: 1000;
+            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+        }
+
+        .mobile-nav-drawer.active {
+            right: 0;
+        }
+
+        .mobile-nav-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .mobile-nav-close {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: var(--blue-50);
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+
+        .mobile-nav-close:hover {
+            background: var(--blue-100);
+            color: var(--blue-600);
+        }
+
+        .mobile-nav-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .mobile-nav-user .user-avatar {
+            width: 36px;
+            height: 36px;
+            font-size: 0.9rem;
+        }
+
+        .mobile-nav-list {
+            padding: 12px;
+        }
+
+        .mobile-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .mobile-nav-item:hover {
+            background: var(--blue-50);
+            color: var(--blue-600);
+        }
+
+        .mobile-nav-item.active {
+            background: linear-gradient(135deg, var(--blue-50), var(--blue-100));
+            color: var(--blue-600);
+        }
+
+        .mobile-nav-item i {
+            width: 20px;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .mobile-nav-footer {
+            padding: 16px 20px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 8px;
+        }
+
+        .mobile-nav-footer form button,
+        .mobile-nav-footer button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 12px 16px;
+            border: none;
+            background: none;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .mobile-nav-footer form button:hover,
+        .mobile-nav-footer button:hover {
+            background: var(--blue-50);
+            color: var(--blue-600);
+        }
+
         /* ========== Logo区域 ========== */
         .logo-container {
             display: flex;
@@ -472,37 +644,80 @@
         /* ========== 响应式适配 ========== */
         @media (max-width: 1024px) {
             .header-inner {
-                flex-direction: column;
-                gap: 20px;
-                padding: 20px;
-            }
-            
-            .nav-container {
                 flex-wrap: wrap;
+                gap: 16px;
+                padding: 16px 24px;
+            }
+
+            .nav-container {
+                order: 3;
+                width: 100%;
                 justify-content: center;
             }
-            
+
             .slogan-text {
-                font-size: 1.25rem;
+                font-size: 1.5rem;
+            }
+
+            .nav-item {
+                padding: 10px 18px;
+                font-size: 0.95rem;
             }
         }
 
-        @media (max-width: 640px) {
-            .main-content {
-                padding: 20px;
+        @media (max-width: 768px) {
+            .header-inner {
+                padding: 12px 16px;
+                flex-wrap: nowrap;
+                gap: 12px;
             }
-            
-            .nav-item {
-                padding: 10px 16px;
-                font-size: 0.85rem;
+
+            /* 隐藏桌面端导航和标语 */
+            .header-inner > .flex.items-center.gap-8 {
+                display: none;
             }
-            
-            .slogan-text {
-                font-size: 1rem;
+
+            /* 隐藏桌面端用户下拉 */
+            .user-dropdown {
+                display: none;
             }
-            
+
+            /* 显示汉堡菜单 */
+            .hamburger-btn {
+                display: flex;
+            }
+
             .logo-img {
-                height: 40px;
+                height: 44px;
+            }
+
+            .main-content {
+                padding: 16px;
+            }
+
+            /* 模态框移动端适配 */
+            .modal-card {
+                width: 95%;
+                padding: 24px;
+                max-width: 95%;
+            }
+
+            .modal-title {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-inner {
+                padding: 10px 12px;
+            }
+
+            .logo-img {
+                height: 36px;
+            }
+
+            .main-content {
+                padding: 12px;
             }
         }
     </style>
@@ -554,7 +769,7 @@
                 </nav>
             </div>
 
-            <!-- 最右侧：用户下拉菜单 -->
+            <!-- 最右侧：用户下拉菜单 + 汉堡菜单 -->
             <div class="user-dropdown" id="userDropdown">
                 <div class="user-trigger" id="userTrigger">
                     <div class="user-avatar">{{ mb_substr(session('learn_user_name', 'U'), 0, 1) }}</div>
@@ -578,8 +793,76 @@
                     </form>
                 </div>
             </div>
+
+            <!-- 汉堡菜单按钮（移动端） -->
+            <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMobileNav()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
+
+    <!-- 移动端导航抽屉 -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay" onclick="closeMobileNav()"></div>
+    <div class="mobile-nav-drawer" id="mobileNavDrawer">
+        <div class="mobile-nav-header">
+            <span style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">菜单</span>
+            <button class="mobile-nav-close" onclick="closeMobileNav()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <!-- 用户信息 -->
+        <div class="mobile-nav-user">
+            <div class="user-avatar">{{ mb_substr(session('learn_user_name', 'U'), 0, 1) }}</div>
+            <span style="font-weight: 500; font-size: 0.95rem;">{{ session('learn_user_name', '用户') }}</span>
+        </div>
+
+        <!-- 导航列表 -->
+        <div class="mobile-nav-list">
+            <a href="{{ route('learn.index') }}" 
+               class="mobile-nav-item {{ request()->routeIs('learn.index') ? 'active' : '' }}">
+                <i class="fa-solid fa-house"></i>
+                <span>首页</span>
+            </a>
+            <a href="{{ route('learn.courses') }}" 
+               class="mobile-nav-item {{ request()->routeIs('learn.courses') ? 'active' : '' }}">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <span>课程学习</span>
+            </a>
+            <a href="{{ route('learn.external') }}" 
+               class="mobile-nav-item {{ request()->routeIs('learn.external') ? 'active' : '' }}">
+                <i class="fa-solid fa-link"></i>
+                <span>外部学习</span>
+            </a>
+            <a href="{{ route('learn.homework') }}" 
+               class="mobile-nav-item {{ request()->routeIs('learn.homework') ? 'active' : '' }}">
+                <i class="fa-solid fa-book-open"></i>
+                <span>作业</span>
+            </a>
+            <a href="{{ route('learn.navigation') }}" 
+               class="mobile-nav-item {{ request()->routeIs('learn.navigation') ? 'active' : '' }}">
+                <i class="fa-solid fa-compass"></i>
+                <span>网站导航</span>
+            </a>
+        </div>
+
+        <!-- 底部操作 -->
+        <div class="mobile-nav-footer">
+            <button type="button" onclick="closeMobileNav(); openChangePasswordModal();">
+                <i class="fa-solid fa-key"></i>
+                <span>修改密码</span>
+            </button>
+            <form action="{{ route('learn.logout') }}" method="POST">
+                @csrf
+                <button type="submit">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>退出登录</span>
+                </button>
+            </form>
+        </div>
+    </div>
 
     <!-- 主内容区域 -->
     <main class="main-content">
@@ -688,6 +971,27 @@
         document.getElementById('changePasswordModal')?.addEventListener('click', function(e) {
             if (e.target === this) closeChangePasswordModal();
         });
+
+        // 移动端导航
+        function toggleMobileNav() {
+            const overlay = document.getElementById('mobileNavOverlay');
+            const drawer = document.getElementById('mobileNavDrawer');
+            const btn = document.getElementById('hamburgerBtn');
+            overlay.classList.add('active');
+            drawer.classList.add('active');
+            btn.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileNav() {
+            const overlay = document.getElementById('mobileNavOverlay');
+            const drawer = document.getElementById('mobileNavDrawer');
+            const btn = document.getElementById('hamburgerBtn');
+            overlay.classList.remove('active');
+            drawer.classList.remove('active');
+            btn.classList.remove('active');
+            document.body.style.overflow = '';
+        }
     </script>
 </body>
 </html>

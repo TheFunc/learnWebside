@@ -80,6 +80,33 @@
         background: transparent;
         position: relative;
         z-index: 2;
+        padding: 20px;
+        text-align: center;
+    }
+
+    /* 移动端适配 */
+    @media (max-width: 768px) {
+        .main-content {
+            min-height: calc(100vh - 60px) !important;
+            height: calc(100vh - 60px) !important;
+        }
+
+        .no-video-placeholder .w-24 {
+            width: 4rem;
+            height: 4rem;
+        }
+
+        .no-video-placeholder .text-4xl {
+            font-size: 2rem;
+        }
+
+        .no-video-placeholder .text-2xl {
+            font-size: 1.25rem;
+        }
+
+        .no-video-placeholder .text-slate-400 {
+            font-size: 0.85rem;
+        }
     }
 </style>
 

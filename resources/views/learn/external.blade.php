@@ -385,10 +385,25 @@
     @media (max-width: 768px) {
         .external-hero {
             padding: 32px 20px;
+            margin-bottom: 20px;
         }
 
         .hero-title {
             font-size: 1.5rem;
+        }
+
+        .hero-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 12px;
+        }
+
+        .hero-icon i {
+            font-size: 20px;
+        }
+
+        .hero-subtitle {
+            font-size: 0.85rem;
         }
 
         .link-grid {
@@ -396,8 +411,73 @@
             padding: 16px;
         }
 
+        .type-menu {
+            margin-bottom: 20px;
+        }
+
         .type-menu-inner {
             padding: 12px 16px;
+        }
+
+        .type-item {
+            padding: 8px 14px;
+            font-size: 0.85rem;
+        }
+
+        .link-section {
+            margin-bottom: 20px;
+        }
+
+        .section-header {
+            padding: 14px 16px;
+        }
+
+        .section-title {
+            font-size: 1rem;
+        }
+
+        .link-card {
+            padding: 12px 16px;
+            gap: 12px;
+        }
+
+        .link-icon {
+            width: 36px;
+            height: 36px;
+        }
+
+        .link-icon i {
+            font-size: 14px;
+        }
+
+        .link-name {
+            font-size: 0.9rem;
+        }
+
+        .link-url {
+            font-size: 0.75rem;
+        }
+
+        .empty-state {
+            padding: 48px 20px;
+        }
+
+        .empty-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 16px;
+        }
+
+        .empty-icon i {
+            font-size: 24px;
+        }
+
+        .empty-title {
+            font-size: 1.1rem;
+        }
+
+        .empty-desc {
+            font-size: 0.85rem;
         }
     }
 </style>

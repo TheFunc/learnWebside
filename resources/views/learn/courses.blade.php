@@ -105,6 +105,94 @@
         text-align: center;
     }
 
+    @media (max-width: 768px) {
+        .course-hero {
+            padding: 32px 20px;
+            margin-bottom: 20px;
+        }
+
+        .hero-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 12px;
+        }
+
+        .hero-icon i {
+            font-size: 1.2rem;
+        }
+
+        .hero-title {
+            font-size: 1.25rem;
+        }
+
+        .hero-subtitle {
+            font-size: 0.85rem;
+        }
+
+        .type-menu {
+            margin-bottom: 20px;
+        }
+
+        .type-menu-inner {
+            padding: 12px 16px;
+        }
+
+        .type-item {
+            padding: 8px 14px;
+            font-size: 0.85rem;
+        }
+
+        .video-grid {
+            gap: 16px;
+        }
+
+        .card-info {
+            padding: 12px 14px;
+        }
+
+        .card-title {
+            font-size: 0.9rem;
+        }
+
+        .card-meta {
+            font-size: 0.75rem;
+        }
+
+        .play-btn {
+            width: 44px;
+            height: 44px;
+            font-size: 1.1rem;
+        }
+
+        .card-badge {
+            top: 8px;
+            right: 8px;
+            padding: 3px 8px;
+            font-size: 0.7rem;
+        }
+
+        .empty-state {
+            padding: 40px 20px;
+        }
+
+        .empty-icon {
+            width: 60px;
+            height: 60px;
+        }
+
+        .empty-icon i {
+            font-size: 1.5rem;
+        }
+
+        .empty-title {
+            font-size: 1.1rem;
+        }
+
+        .empty-desc {
+            font-size: 0.85rem;
+        }
+    }
+
     /* 背景几何图案 */
     .hero-pattern {
         position: absolute;

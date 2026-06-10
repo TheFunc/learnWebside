@@ -437,6 +437,44 @@
                 font-size: 22px;
             }
         }
+
+        @media (max-width: 360px) {
+            .login-header {
+                padding: 28px 20px 24px;
+            }
+
+            .login-body {
+                padding: 24px 20px;
+            }
+
+            .login-footer {
+                padding: 12px 20px 20px;
+            }
+
+            .login-logo {
+                width: 56px;
+                height: 56px;
+                margin-bottom: 16px;
+            }
+
+            .login-logo i {
+                font-size: 24px;
+            }
+
+            .login-header h1 {
+                font-size: 20px;
+            }
+
+            .form-input {
+                padding: 12px 14px 12px 42px;
+                font-size: 14px;
+            }
+
+            .btn-login {
+                padding: 14px;
+                font-size: 15px;
+            }
+        }
     </style>
 </head>
 <body>

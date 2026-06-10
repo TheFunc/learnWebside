@@ -1,7 +1,7 @@
 @extends('learn.layouts')
 
 @section('content')
-<div class="max-w-md mx-auto">
+<div class="max-w-md mx-auto px-4">
     <!-- 修改密码卡片 -->
     <div class="relative overflow-hidden rounded-2xl bg-white border border-blue-100 shadow-md p-8">
         <!-- 装饰背景 -->
@@ -70,4 +70,26 @@
         </div>
     </div>
 </div>
+
+<style>
+@media (max-width: 480px) {
+    .max-w-md .rounded-2xl {
+        padding: 24px 20px;
+    }
+
+    .max-w-md .text-2xl {
+        font-size: 1.25rem;
+    }
+
+    .max-w-md input[type="password"] {
+        padding: 12px 14px;
+        font-size: 14px;
+    }
+
+    .max-w-md button[type="submit"] {
+        padding: 12px;
+        font-size: 14px;
+    }
+}
+</style>
 @endsection

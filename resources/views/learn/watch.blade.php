@@ -85,6 +85,7 @@
         font-size: 0.9rem;
         transition: all 0.25s ease;
         white-space: nowrap;
+        flex-shrink: 0;
     }
 
     .back-btn:hover {
@@ -113,6 +114,69 @@
     @media (max-width: 1024px) {
         .watch-layout {
             grid-template-columns: 1fr;
+        }
+
+        .playlist-section {
+            max-height: 400px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .watch-header {
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .back-btn {
+            padding: 8px 14px;
+            font-size: 0.85rem;
+        }
+
+        .back-btn span {
+            display: none;
+        }
+
+        .watch-title {
+            font-size: 1.1rem;
+        }
+
+        .video-info {
+            padding: 16px;
+        }
+
+        .video-title {
+            font-size: 1rem;
+        }
+
+        .video-desc {
+            font-size: 0.85rem;
+        }
+
+        .playlist-section {
+            max-height: 300px;
+        }
+
+        .playlist-header {
+            padding: 12px 16px;
+            font-size: 0.9rem;
+        }
+
+        .playlist-item {
+            padding: 10px 12px;
+        }
+
+        .item-index {
+            width: 28px;
+            height: 28px;
+            font-size: 0.8rem;
+        }
+
+        .item-title {
+            font-size: 0.85rem;
+        }
+
+        .item-desc {
+            font-size: 0.7rem;
         }
     }
 

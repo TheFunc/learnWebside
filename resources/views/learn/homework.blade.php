@@ -138,6 +138,109 @@
         text-align: center;
     }
 
+    @media (max-width: 768px) {
+        .homework-hero {
+            padding: 32px 20px;
+            margin-bottom: 20px;
+        }
+
+        .homework-hero .hero-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 12px;
+        }
+
+        .homework-hero .hero-icon i {
+            font-size: 1.2rem;
+        }
+
+        .homework-hero .hero-title {
+            font-size: 1.25rem;
+        }
+
+        .homework-hero .hero-subtitle {
+            font-size: 0.85rem;
+        }
+
+        .homework-grid {
+            gap: 16px;
+        }
+
+        .homework-card {
+            padding: 20px;
+        }
+
+        .card-icon {
+            width: 36px;
+            height: 36px;
+            font-size: 0.95rem;
+        }
+
+        .card-title {
+            font-size: 0.95rem;
+        }
+
+        .btn {
+            padding: 8px 14px;
+            font-size: 0.8rem;
+        }
+
+        .btn i {
+            font-size: 0.75rem;
+        }
+
+        .difficulty-num {
+            font-size: 0.75rem;
+        }
+
+        .difficulty i {
+            font-size: 0.75rem;
+        }
+
+        /* 上传弹窗移动端适配 */
+        .modal-content {
+            width: 95%;
+            max-width: 95%;
+            margin: 16px;
+        }
+
+        .modal-header {
+            padding: 16px 20px;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .file-drop {
+            padding: 24px 16px;
+        }
+
+        .modal-footer {
+            padding: 12px 20px;
+        }
+
+        .success-toast {
+            top: 16px;
+            right: 16px;
+            left: 16px;
+            padding: 12px 16px;
+            font-size: 0.85rem;
+        }
+
+        .pagination-wrapper {
+            margin-top: 24px;
+        }
+
+        .pagination-wrapper span,
+        .pagination-wrapper a {
+            min-width: 36px;
+            height: 36px;
+            padding: 0 10px;
+            font-size: 0.85rem;
+        }
+    }
+
     .hero-pattern {
         position: absolute;
         inset: 0;
