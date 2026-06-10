@@ -10,6 +10,153 @@
             padding: 0 30px;
         }
 
+        /* 顶部固定按钮栏 */
+        .sticky-actions {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: #fff;
+            border-radius: 16px;
+            padding: 20px 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .sticky-actions .form-actions {
+            margin-top: 0;
+            margin-left: auto;
+        }
+
+        /* 整体进度条 */
+        .overall-progress {
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .overall-progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 6px;
+        }
+
+        .overall-progress-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .overall-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .overall-progress-fill.complete {
+            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+        }
+
+        /* 保存按钮禁用状态 */
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-primary:disabled:hover {
+            transform: none;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        /* 提示弹窗 */
+        .toast-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .toast-overlay.active {
+            display: flex;
+        }
+
+        .toast-box {
+            background: #fff;
+            border-radius: 16px;
+            padding: 32px;
+            width: 90%;
+            max-width: 380px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .toast-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+
+        .toast-icon i {
+            font-size: 28px;
+            color: white;
+        }
+
+        .toast-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .toast-message {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .toast-btn {
+            padding: 12px 32px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            transition: all 0.2s ease;
+        }
+
+        .toast-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
         .card {
             background: #fff;
             border-radius: 16px;
@@ -489,6 +636,27 @@
             </div>
         @endif
 
+        {{-- 顶部固定按钮栏 --}}
+        <div class="sticky-actions">
+            <div class="overall-progress">
+                <div class="overall-progress-label">
+                    <span>上传进度</span>
+                    <span id="progressText">0 / 0</span>
+                </div>
+                <div class="overall-progress-bar">
+                    <div class="overall-progress-fill" id="overallProgressFill"></div>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                    <i class="fa-solid fa-rotate-left"></i> 重置
+                </button>
+                <button type="button" class="btn btn-primary" id="saveBtn" onclick="handleSaveClick()">
+                    <i class="fa-solid fa-save"></i> 保存全部
+                </button>
+            </div>
+        </div>
+
         <div class="card">
             <h3 class="card-title">增加视频</h3>
             
@@ -542,17 +710,6 @@
             
             <div class="file-list" id="videoFileList"></div>
         </div>
-
-        <div class="card">
-            <div class="form-actions" style="justify-content: flex-end;">
-                <button type="button" class="btn btn-secondary" onclick="resetForm()">
-                    <i class="fa-solid fa-rotate-left"></i> 重置
-                </button>
-                <button type="button" class="btn btn-primary" onclick="saveAll()">
-                    <i class="fa-solid fa-save"></i> 保存全部
-                </button>
-            </div>
-        </div>
     </div>
 
     <div class="success-modal-overlay" id="successModal">
@@ -583,10 +740,25 @@
         </div>
     </div>
 
+    {{-- 未完成上传提示弹窗 --}}
+    <div class="toast-overlay" id="toastOverlay">
+        <div class="toast-box">
+            <div class="toast-icon">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 class="toast-title">视频尚未上传完成</h3>
+            <p class="toast-message" id="toastMessage">请等待所有视频文件上传完成后再点击保存。</p>
+            <button class="toast-btn" onclick="closeToast()">我知道了</button>
+        </div>
+    </div>
+
     <script>
         const uploadedVideos = [];
         let coverPath = null;
         let coverFilename = null;
+        let totalVideos = 0;
+        let completedVideos = 0;
+        let uploadingVideos = {}; // 跟踪正在上传的文件
 
         document.getElementById('coverUploadArea').addEventListener('dragover', function(e) {
             e.preventDefault();
@@ -725,6 +897,10 @@
             const fileList = document.getElementById('videoFileList');
             const fileId = 'video-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
             
+            totalVideos++;
+            uploadingVideos[fileId] = true;
+            updateOverallProgress();
+            
             fileList.innerHTML += `
                 <div class="file-item" id="${fileId}">
                     <div class="file-icon video">
@@ -763,6 +939,8 @@
             });
 
             xhr.addEventListener('load', function() {
+                delete uploadingVideos[fileId];
+                
                 if (xhr.status === 200) {
                     const response = JSON.parse(xhr.responseText);
                     
@@ -771,6 +949,9 @@
                         filename: response.filename,
                         originalName: file.name
                     });
+
+                    completedVideos++;
+                    updateOverallProgress();
 
                     document.querySelector('#' + fileId + ' .file-status').textContent = '上传成功';
                     document.querySelector('#' + fileId + ' .file-status').className = 'file-status success';
@@ -781,12 +962,17 @@
                         </button>
                     `;
                 } else {
+                    totalVideos--;
+                    updateOverallProgress();
                     document.querySelector('#' + fileId + ' .file-status').textContent = '上传失败';
                     document.querySelector('#' + fileId + ' .file-status').className = 'file-status error';
                 }
             });
 
             xhr.addEventListener('error', function() {
+                delete uploadingVideos[fileId];
+                totalVideos--;
+                updateOverallProgress();
                 document.querySelector('#' + fileId + ' .file-status').textContent = '上传失败';
                 document.querySelector('#' + fileId + ' .file-status').className = 'file-status error';
             });
@@ -795,6 +981,11 @@
         }
 
         function cancelUpload(fileId) {
+            if (uploadingVideos[fileId]) {
+                delete uploadingVideos[fileId];
+                totalVideos--;
+                updateOverallProgress();
+            }
             document.getElementById(fileId).remove();
         }
 
@@ -802,8 +993,61 @@
             const index = uploadedVideos.findIndex(v => v.path === path);
             if (index > -1) {
                 uploadedVideos.splice(index, 1);
+                completedVideos--;
+                updateOverallProgress();
             }
             document.getElementById(fileId).remove();
+        }
+
+        function updateOverallProgress() {
+            const fill = document.getElementById('overallProgressFill');
+            const text = document.getElementById('progressText');
+            const saveBtn = document.getElementById('saveBtn');
+            
+            if (totalVideos === 0) {
+                fill.style.width = '0%';
+                fill.classList.remove('complete');
+                text.textContent = '0 / 0';
+                saveBtn.disabled = true;
+                return;
+            }
+            
+            const percent = (completedVideos / totalVideos) * 100;
+            fill.style.width = percent + '%';
+            text.textContent = completedVideos + ' / ' + totalVideos;
+            
+            const allComplete = completedVideos > 0 && completedVideos === totalVideos && Object.keys(uploadingVideos).length === 0;
+            
+            if (allComplete) {
+                fill.classList.add('complete');
+                saveBtn.disabled = false;
+            } else {
+                fill.classList.remove('complete');
+                saveBtn.disabled = true;
+            }
+        }
+
+        function handleSaveClick() {
+            const allComplete = completedVideos > 0 && completedVideos === totalVideos && Object.keys(uploadingVideos).length === 0;
+            
+            if (!allComplete) {
+                const uploading = Object.keys(uploadingVideos).length;
+                const remaining = totalVideos - completedVideos;
+                let msg = '还有 ' + remaining + ' 个视频未完成上传。';
+                if (uploading > 0) {
+                    msg += '（其中 ' + uploading + ' 个正在上传中）';
+                }
+                msg += '\n\n请等待所有视频上传完成后再点击保存。';
+                document.getElementById('toastMessage').textContent = msg;
+                document.getElementById('toastOverlay').classList.add('active');
+                return;
+            }
+            
+            saveAll();
+        }
+
+        function closeToast() {
+            document.getElementById('toastOverlay').classList.remove('active');
         }
 
         function saveAll() {
@@ -862,8 +1106,12 @@
             coverPath = null;
             coverFilename = null;
             uploadedVideos.length = 0;
+            totalVideos = 0;
+            completedVideos = 0;
+            uploadingVideos = {};
             document.getElementById('coverPreview').innerHTML = '';
             document.getElementById('videoFileList').innerHTML = '';
+            updateOverallProgress();
         }
 
         function formatFileSize(bytes) {

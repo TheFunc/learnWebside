@@ -457,6 +457,9 @@
         @yield('content')
     </main>
 
+    <!-- 全局弹窗容器（body 直接子元素，避免 transform 影响 fixed 定位） -->
+    @yield('modal')
+
     <!-- 页面加载动画 -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {

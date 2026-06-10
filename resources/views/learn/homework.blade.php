@@ -68,47 +68,6 @@
         @endforelse
     </div>
 
-    {{-- 上传弹窗 --}}
-    <div class="upload-modal" id="uploadModal">
-        <div class="modal-overlay" onclick="closeUploadModal()"></div>
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">上传作业</h3>
-                <button class="modal-close" onclick="closeUploadModal()">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            <form id="uploadForm" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="modal-body">
-                    <p class="upload-hw-title" id="uploadHwTitle"></p>
-                    <div class="file-drop" id="fileDrop">
-                        <input type="file" name="file" id="fileInput" class="file-input" required>
-                        <div class="drop-content">
-                            <i class="fa-solid fa-cloud-arrow-up"></i>
-                            <p class="drop-text">点击或拖拽文件到此处</p>
-                            <p class="drop-hint">支持 ZIP、7Z、RAR、TAR、GZ 等压缩包，最大 50MB</p>
-                        </div>
-                        <div class="file-preview" id="filePreview" style="display: none;">
-                            <i class="fa-solid fa-file"></i>
-                            <span class="file-name" id="fileName"></span>
-                            <button type="button" class="file-remove" onclick="removeFile(event)">
-                                <i class="fa-solid fa-xmark"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-cancel" onclick="closeUploadModal()">取消</button>
-                    <button type="submit" class="btn btn-submit">
-                        <i class="fa-solid fa-paper-plane"></i>
-                        <span>提交作业</span>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     {{-- 分页 --}}
     @if($homeworks->hasPages())
     <div class="pagination-wrapper">
@@ -116,6 +75,49 @@
     </div>
     @endif
 </div>
+
+{{-- 上传弹窗 - 使用 @section('modal') 渲染在 layout 的 body 层级，避免受 .main-content 的 transform 影响 --}}
+@section('modal')
+<div class="upload-modal" id="uploadModal">
+    <div class="modal-overlay" onclick="closeUploadModal()"></div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">上传作业</h3>
+            <button class="modal-close" onclick="closeUploadModal()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <form id="uploadForm" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="modal-body">
+                <p class="upload-hw-title" id="uploadHwTitle"></p>
+                <div class="file-drop" id="fileDrop">
+                    <input type="file" name="file" id="fileInput" class="file-input" required>
+                    <div class="drop-content">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <p class="drop-text">点击或拖拽文件到此处</p>
+                        <p class="drop-hint">支持 ZIP、7Z、RAR、TAR、GZ 等压缩包，最大 50MB</p>
+                    </div>
+                    <div class="file-preview" id="filePreview" style="display: none;">
+                        <i class="fa-solid fa-file"></i>
+                        <span class="file-name" id="fileName"></span>
+                        <button type="button" class="file-remove" onclick="removeFile(event)">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-cancel" onclick="closeUploadModal()">取消</button>
+                <button type="submit" class="btn btn-submit">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span>提交作业</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+@endsection
 
 <style>
     .homework-page {
@@ -728,14 +730,19 @@ function openUploadModal(hwId, hwTitle) {
     document.getElementById('filePreview').style.display = 'none';
     document.querySelector('.drop-content').style.display = '';
 
-    modal.classList.add('active');
+    // 补偿滚动条宽度，防止弹窗偏移
+    const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.paddingRight = scrollBarWidth + 'px';
     document.body.style.overflow = 'hidden';
+
+    modal.classList.add('active');
 }
 
 function closeUploadModal() {
     const modal = document.getElementById('uploadModal');
     modal.classList.remove('active');
     document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
 }
 
 function removeFile(e) {
