@@ -323,6 +323,7 @@
             font-weight: 900;
             font-size: 2.25rem;
             letter-spacing: 0.15em;
+            white-space: nowrap;
             background: linear-gradient(
                 135deg,
                 var(--blue-600) 0%,
@@ -363,6 +364,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            white-space: nowrap;
         }
 
         .nav-item {
@@ -642,17 +644,24 @@
         }
 
         /* ========== 响应式适配 ========== */
+        .header-inner {
+            flex-wrap: nowrap !important;
+        }
+
+        .header-slogan-nav {
+            white-space: nowrap;
+            flex-shrink: 1;
+            min-width: 0;
+        }
+
+        .header-inner > div:first-child {
+            flex-shrink: 0;
+        }
+
         @media (max-width: 1024px) {
             .header-inner {
-                flex-wrap: wrap;
-                gap: 16px;
+                gap: 12px;
                 padding: 16px 24px;
-            }
-
-            .nav-container {
-                order: 3;
-                width: 100%;
-                justify-content: center;
             }
 
             .slogan-text {
@@ -668,12 +677,11 @@
         @media (max-width: 768px) {
             .header-inner {
                 padding: 12px 16px;
-                flex-wrap: nowrap;
-                gap: 12px;
+                gap: 8px;
             }
 
-            /* 隐藏桌面端导航和标语 */
-            .header-inner > .flex.items-center.gap-8 {
+            /* 隐藏桌面端导航 */
+            .nav-container {
                 display: none;
             }
 
@@ -689,6 +697,12 @@
 
             .logo-img {
                 height: 44px;
+            }
+
+            .slogan-text {
+                font-size: 1rem;
+                white-space: nowrap;
+                letter-spacing: 0.08em;
             }
 
             .main-content {
@@ -716,6 +730,11 @@
                 height: 36px;
             }
 
+            .slogan-text {
+                font-size: 1rem;
+                white-space: nowrap;
+            }
+
             .main-content {
                 padding: 12px;
             }
@@ -736,14 +755,14 @@
     <!-- 顶部Header -->
     <header class="learn-header">
         <div class="header-glow"></div>
-        <div class="header-inner w-full px-12 py-5 flex items-center justify-between">
+        <div class="header-inner w-full px-12 py-5 flex items-center justify-between flex-nowrap">
             <!-- 最左侧：Logo -->
             <div>
                 <img src="{{ asset('images/jmjx-logo.png') }}" alt="Logo" class="logo-img">
             </div>
 
             <!-- 中间：标语 + 导航栏 -->
-            <div class="flex items-center gap-8">
+            <div class="flex items-center gap-8 header-slogan-nav">
                 <span class="slogan-text">家校情怀 技能报国</span>
                 <nav class="nav-container">
                     <a href="{{ route('learn.index') }}" 
