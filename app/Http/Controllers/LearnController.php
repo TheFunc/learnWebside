@@ -16,17 +16,19 @@ use App\Models\Homework;
 use App\Models\HomeworkMen;
 use App\Models\ExternalType;
 use App\Models\ExternalInfo;
+use App\Models\Competition;
 
 class LearnController extends Controller
 {
     /**
      * 学习平台首页
      */
-    public function index()
+    public function index(Request $request)
     {
         $homepageVideo = $this->getHomepageVideo();
+        $competitions = Competition::latest()->paginate(8);
 
-        return view('learn.home', compact('homepageVideo'));
+        return view('learn.home', compact('homepageVideo', 'competitions'));
     }
 
     /**

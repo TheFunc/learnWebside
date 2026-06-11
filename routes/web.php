@@ -6,12 +6,13 @@ use App\Http\Controllers\Admin\HomeworkController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\VideoController;
+use App\Http\Controllers\Admin\CompetitionController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LearnLoginController;
 use App\Http\Controllers\LearnController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/learn');
 });
 
 // 学习平台登录路由（无需认证）
@@ -90,4 +91,9 @@ Route::middleware('admin.auth')->group(function () {
     Route::get('settings/videos', [SettingsController::class, 'getVideos'])->name('admin.settings.videos');
     Route::post('settings/upload-video', [SettingsController::class, 'uploadVideo'])->name('admin.settings.upload.video');
     Route::delete('settings/delete-video', [SettingsController::class, 'deleteVideo'])->name('admin.settings.delete.video');
+
+    Route::get('competition/scenery', [CompetitionController::class, 'scenery'])->name('admin.competition.scenery');
+    Route::post('competition/scenery', [CompetitionController::class, 'store'])->name('admin.competition.scenery.store');
+    Route::get('competition/manage', [CompetitionController::class, 'manage'])->name('admin.competition.manage');
+    Route::delete('competition/manage/{id}', [CompetitionController::class, 'destroy'])->name('admin.competition.destroy');
 });

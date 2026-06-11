@@ -487,6 +487,26 @@
             <div class="menu-item">
                 <div class="menu-header" onclick="toggleMenu(this)">
                     <div class="menu-content">
+                        <i class="icon fa-solid fa-trophy"></i>
+                        <span class="title">比赛</span>
+                    </div>
+                    <span class="arrow">›</span>
+                </div>
+                <div class="sub-menu">
+                    <a href="{{ route('admin.competition.scenery') }}" {{ request()->routeIs('admin.competition.scenery') ? 'class=active' : '' }}>
+                        <i class="sub-icon fa-solid fa-image"></i>
+                        <span>比赛风光</span>
+                    </a>
+                    <a href="{{ route('admin.competition.manage') }}" {{ request()->routeIs('admin.competition.manage') ? 'class=active' : '' }}>
+                        <i class="sub-icon fa-solid fa-cogs"></i>
+                        <span>管理风光</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <div class="menu-header" onclick="toggleMenu(this)">
+                    <div class="menu-content">
                         <i class="icon fa-solid fa-sliders-h"></i>
                         <span class="title">系统设置</span>
                     </div>
