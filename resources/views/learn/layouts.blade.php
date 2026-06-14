@@ -6,8 +6,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>家校情怀 技能报国 - 学习平台</title>
     
-    <!-- Vite Assets (Tailwind CSS & JS) -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- Vite Assets (Tailwind CSS) -->
+    @vite('resources/css/app.css')
     
     <!-- 引入 Font Awesome 图标库 -->
     <link rel="stylesheet" href="{{ asset('css/fontawesome.min.css') }}">

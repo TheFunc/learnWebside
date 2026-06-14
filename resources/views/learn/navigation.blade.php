@@ -1,7 +1,7 @@
 @extends('learn.layouts')
 
 @section('content')
-<div class="max-w-5xl mx-auto px-4 py-8">
+<div class="w-full px-6 lg:px-10 py-8">
     <!-- 标语横幅 -->
     <div class="nav-hero">
         <div class="hero-pattern"></div>
