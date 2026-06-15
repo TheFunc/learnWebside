@@ -1042,6 +1042,11 @@
                 document.getElementById('toastOverlay').classList.add('active');
                 return;
             }
+
+            // 立即禁用按钮，防止重复点击
+            const btn = document.getElementById('saveBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 保存中...';
             
             saveAll();
         }

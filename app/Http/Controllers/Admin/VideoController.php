@@ -18,10 +18,13 @@ class VideoController extends Controller
 
     public function manage()
     {
-        // 获取所有视频组（按GroupID分组）
-        $videoGroups = VideoInfo::select('GroupID', 'title', 'TypeID', 'created_at')
+        // 获取每个 GroupID 中最早的一条记录作为视频组
+        $groupIds = VideoInfo::selectRaw('MIN(id) as id')
+            ->groupBy('GroupID')
+            ->pluck('id');
+
+        $videoGroups = VideoInfo::whereIn('id', $groupIds)
             ->with(['cover', 'type'])
-            ->groupBy('GroupID', 'title', 'TypeID', 'created_at')
             ->orderBy('created_at', 'desc')
             ->get();
 
