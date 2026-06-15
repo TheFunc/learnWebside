@@ -363,21 +363,25 @@
         .nav-container {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 4px;
             white-space: nowrap;
+            flex-shrink: 1;
+            min-width: 0;
+            overflow: hidden;
         }
 
         .nav-item {
             position: relative;
-            padding: 14px 28px;
+            padding: 10px 18px;
             color: var(--text-secondary);
             text-decoration: none;
             font-weight: 500;
-            font-size: 1.1rem;
-            letter-spacing: 0.05em;
-            border-radius: 12px;
+            font-size: 0.95rem;
+            letter-spacing: 0.03em;
+            border-radius: 10px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden;
+            flex-shrink: 0;
         }
 
         .nav-item::before {
@@ -413,20 +417,21 @@
         }
 
         .nav-item i {
-            margin-right: 8px;
-            font-size: 0.9rem;
+            margin-right: 6px;
+            font-size: 0.85rem;
         }
 
         /* ========== 用户区域 ========== */
         .user-dropdown {
             position: relative;
+            flex-shrink: 0;
         }
 
         .user-trigger {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 12px 20px;
+            gap: 8px;
+            padding: 8px 14px;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 12px;
@@ -441,22 +446,27 @@
         }
 
         .user-avatar {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             background: linear-gradient(135deg, var(--blue-500), var(--accent-cyan));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: white;
+            flex-shrink: 0;
         }
 
         .user-name {
             font-weight: 500;
-            font-size: 1.05rem;
+            font-size: 0.95rem;
             color: var(--text-primary);
+            max-width: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .dropdown-menu {
@@ -646,31 +656,203 @@
         /* ========== 响应式适配 ========== */
         .header-inner {
             flex-wrap: nowrap !important;
+            padding: 20px 48px;
+            gap: 20px;
         }
 
         .header-slogan-nav {
             white-space: nowrap;
             flex-shrink: 1;
             min-width: 0;
+            overflow: hidden;
+            gap: 20px;
         }
 
         .header-inner > div:first-child {
             flex-shrink: 0;
         }
 
-        @media (max-width: 1024px) {
+        @media (max-width: 1400px) {
             .header-inner {
-                gap: 12px;
-                padding: 16px 24px;
-            }
-
-            .slogan-text {
-                font-size: 1.5rem;
+                padding-left: 28px;
+                padding-right: 28px;
+                gap: 14px;
             }
 
             .nav-item {
-                padding: 10px 18px;
-                font-size: 0.95rem;
+                padding: 8px 14px;
+                font-size: 0.88rem;
+            }
+
+            .header-slogan-nav {
+                gap: 14px;
+            }
+
+            .slogan-text {
+                font-size: 1.75rem;
+                letter-spacing: 0.12em;
+            }
+
+            .logo-img {
+                height: 60px;
+            }
+        }
+
+        @media (max-width: 1250px) {
+            .header-inner {
+                padding-left: 16px;
+                padding-right: 16px;
+                gap: 8px;
+            }
+
+            .slogan-text {
+                font-size: 1.2rem;
+                letter-spacing: 0.06em;
+            }
+
+            .header-slogan-nav {
+                gap: 8px;
+            }
+
+            .nav-item {
+                padding: 6px 8px;
+                font-size: 0.8rem;
+            }
+
+            .nav-item i {
+                margin-right: 3px;
+                font-size: 0.75rem;
+            }
+
+            .logo-img {
+                height: 50px;
+            }
+
+            .user-trigger {
+                padding: 6px 8px;
+                gap: 5px;
+            }
+
+            .user-avatar {
+                width: 30px;
+                height: 30px;
+                font-size: 0.8rem;
+            }
+
+            .user-name {
+                font-size: 0.82rem;
+                max-width: 50px;
+            }
+        }
+
+        @media (max-width: 1100px) {
+            .header-inner {
+                padding: 10px 12px;
+                gap: 6px;
+            }
+
+            .slogan-text {
+                font-size: 1rem;
+                letter-spacing: 0.05em;
+            }
+
+            .header-slogan-nav {
+                gap: 6px;
+            }
+
+            .nav-item {
+                padding: 5px 7px;
+                font-size: 0.78rem;
+            }
+
+            .nav-item i {
+                margin-right: 3px;
+                font-size: 0.72rem;
+            }
+
+            .logo-img {
+                height: 48px;
+            }
+
+            .user-trigger {
+                padding: 5px 8px;
+                gap: 4px;
+            }
+
+            .user-avatar {
+                width: 28px;
+                height: 28px;
+                font-size: 0.78rem;
+            }
+
+            .user-name {
+                font-size: 0.8rem;
+                max-width: 50px;
+            }
+        }
+
+        @media (max-width: 960px) {
+            .slogan-text {
+                display: none;
+            }
+
+            .header-inner {
+                padding: 8px 8px;
+                gap: 4px;
+            }
+
+            .nav-item {
+                padding: 5px 5px;
+                font-size: 0.75rem;
+            }
+
+            .logo-img {
+                height: 42px;
+            }
+
+            .user-trigger {
+                padding: 5px 6px;
+                gap: 3px;
+            }
+
+            .user-avatar {
+                width: 26px;
+                height: 26px;
+                font-size: 0.7rem;
+            }
+
+            .user-name {
+                max-width: 40px;
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 860px) {
+            .user-name {
+                display: none;
+            }
+
+            .user-trigger {
+                padding: 4px 5px;
+            }
+
+            .nav-item {
+                padding: 4px 4px;
+                font-size: 0.72rem;
+            }
+
+            .nav-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+
+            .nav-container::-webkit-scrollbar {
+                display: none;
+            }
+
+            .logo-img {
+                height: 36px;
             }
         }
 
@@ -755,14 +937,14 @@
     <!-- 顶部Header -->
     <header class="learn-header">
         <div class="header-glow"></div>
-        <div class="header-inner w-full px-12 py-5 flex items-center justify-between flex-nowrap">
+        <div class="header-inner w-full flex items-center justify-between flex-nowrap">
             <!-- 最左侧：Logo -->
             <div>
                 <img src="{{ asset('images/jmjx-logo.png') }}" alt="Logo" class="logo-img">
             </div>
 
             <!-- 中间：标语 + 导航栏 -->
-            <div class="flex items-center gap-8 header-slogan-nav">
+            <div class="flex items-center header-slogan-nav">
                 <span class="slogan-text">家校情怀 技能报国</span>
                 <nav class="nav-container">
                     <a href="{{ route('learn.index') }}" 
@@ -788,7 +970,7 @@
                 </nav>
             </div>
 
-            <!-- 最右侧：用户下拉菜单 + 汉堡菜单 -->
+            <!-- 最右侧：可折叠用户下拉菜单 + 汉堡菜单 -->
             <div class="user-dropdown" id="userDropdown">
                 <div class="user-trigger" id="userTrigger">
                     <div class="user-avatar">{{ mb_substr(session('learn_user_name', 'U'), 0, 1) }}</div>
@@ -999,7 +1181,6 @@
             overlay.classList.add('active');
             drawer.classList.add('active');
             btn.classList.add('active');
-            document.body.style.overflow = 'hidden';
         }
 
         function closeMobileNav() {
@@ -1009,7 +1190,6 @@
             overlay.classList.remove('active');
             drawer.classList.remove('active');
             btn.classList.remove('active');
-            document.body.style.overflow = '';
         }
     </script>
 </body>
