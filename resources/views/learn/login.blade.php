@@ -496,7 +496,7 @@
                 <div class="login-logo">
                     <i class="fas fa-graduation-cap"></i>
                 </div>
-                <h1>学习平台登录</h1>
+                <h1>网站技术学习平台</h1>
                 <p class="subtitle">家校情怀 技能报国</p>
             </div>
             
