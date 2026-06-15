@@ -312,7 +312,7 @@
             </div>
             
             <div class="form-group">
-                <label class="form-label">荣誉描述</label>
+                <label class="form-label">荣誉描述 <span style="color:#94a3b8;font-weight:400;text-transform:none;letter-spacing:0;">（可选）</span></label>
                 <textarea name="Description" class="form-textarea" placeholder="请输入荣誉描述">{{ old('Description') }}</textarea>
             </div>
             

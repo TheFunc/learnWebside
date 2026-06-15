@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', '管理风光')
+@section('title', '管理荣誉墙')
 
 @section('content')
     <style>
@@ -193,6 +193,18 @@
             transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
         }
+        .btn-blue-action {
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+        .btn-blue-action::before {
+            background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+        }
+        .btn-blue-action:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
         .empty-state {
             text-align: center;
             padding: 48px;
@@ -252,7 +264,7 @@
             border-radius: 20px;
             padding: 32px;
             width: 90%;
-            max-width: 480px;
+            max-width: 520px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
             transform: scale(0.9) translateY(20px);
             transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
@@ -261,21 +273,6 @@
         }
         .modal-overlay.active .modal {
             transform: scale(1) translateY(0);
-        }
-        .modal::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #ef4444, #f87171, #ef4444);
-            background-size: 200% 100%;
-            animation: shimmer 2s linear infinite;
-        }
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
         }
         .modal-header {
             display: flex;
@@ -296,7 +293,7 @@
             content: '';
             width: 4px;
             height: 20px;
-            background: #ef4444;
+            background: #3b82f6;
             border-radius: 2px;
         }
         .modal-close {
@@ -321,15 +318,57 @@
         .modal-body {
             margin-bottom: 24px;
         }
-        .modal-description {
-            color: #64748b;
-            font-size: 14px;
-            line-height: 1.6;
+        .form-group {
             margin-bottom: 20px;
         }
-        .modal-description strong {
-            color: #1e293b;
+        .form-label {
+            display: block;
+            font-size: 14px;
             font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+        .form-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.25s ease;
+            box-sizing: border-box;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        .form-textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.25s ease;
+            resize: vertical;
+            min-height: 80px;
+            box-sizing: border-box;
+        }
+        .form-textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        .form-file {
+            width: 100%;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+        .current-img {
+            max-width: 200px;
+            max-height: 120px;
+            border-radius: 8px;
+            margin-top: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
         .modal-actions {
             display: flex;
@@ -372,21 +411,21 @@
             background: #e2e8f0;
             transform: translateY(-1px);
         }
-        .modal-btn-danger {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        .modal-btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
             color: white;
-            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
         }
-        .modal-btn-danger::before {
+        .modal-btn-primary::before {
             background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
         }
-        .modal-btn-danger:hover {
+        .modal-btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
         }
-        .modal-btn-danger:active {
+        .modal-btn-primary:active {
             transform: translateY(0);
-            box-shadow: 0 2px 10px rgba(239, 68, 68, 0.4);
+            box-shadow: 0 2px 10px rgba(59, 130, 246, 0.4);
         }
         .toast {
             position: fixed;
@@ -416,6 +455,7 @@
             color: white;
             box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
         }
+
     </style>
 
     <div class="main-container">
@@ -470,8 +510,16 @@
                         <td>{{ $item->created_at->format('Y-m-d H:i') }}</td>
                         <td>{{ $item->updated_at->format('Y-m-d H:i') }}</td>
                         <td>
-                            <button onclick="deleteCompetition({{ $item->id }}, '{{ $item->Title }}')" 
-                                    class="btn-action btn-red">
+                            <button class="btn-action btn-blue-action btn-edit"
+                                    data-id="{{ $item->id }}"
+                                    data-title="{{ $item->Title }}"
+                                    data-description="{{ $item->Description ?? '' }}"
+                                    data-imgurl="{{ $item->ImgUrl ?? '' }}">
+                                <i class="fa-solid fa-pen"></i> 编辑
+                            </button>
+                            <button class="btn-action btn-red btn-delete"
+                                    data-id="{{ $item->id }}"
+                                    data-title="{{ $item->Title }}">
                                 <i class="fa-solid fa-trash"></i> 删除
                             </button>
                         </td>
@@ -495,6 +543,48 @@
                 {{ $competitions->links() }}
             </div>
         @endif
+    </div>
+
+    {{-- 编辑弹窗 --}}
+    <div id="editModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">编辑比赛</h3>
+                <button class="modal-close" onclick="closeEditModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <form id="editForm" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label">标题</label>
+                        <input type="text" name="Title" id="editTitle" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">描述</label>
+                        <textarea name="Description" id="editDescription" class="form-textarea"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">封面图片</label>
+                        <input type="file" name="ImgUrl" id="editImgUrl" class="form-file" accept="image/jpeg,image/png,image/jpg,image/webp,image/gif">
+                        <div id="currentImgContainer" style="display: none;">
+                            <p style="font-size:12px;color:#64748b;margin:8px 0 4px;">当前图片：</p>
+                            <img id="currentImg" class="current-img">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="modal-btn modal-btn-secondary" onclick="closeEditModal()">
+                        <i class="fa-solid fa-xmark"></i> 取消
+                    </button>
+                    <button type="submit" class="modal-btn modal-btn-primary">
+                        <i class="fa-solid fa-save"></i> 保存修改
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
     {{-- 删除确认弹窗 --}}
@@ -536,10 +626,46 @@
     @endif
 
     <script>
-        function deleteCompetition(id, title) {
-            document.getElementById('deleteTitle').textContent = title;
-            document.getElementById('deleteForm').action = '/competition/manage/' + id;
-            document.getElementById('deleteModal').classList.add('active');
+        // 编辑功能 - 通过 data 属性
+        document.addEventListener('click', function(e) {
+            const editBtn = e.target.closest('.btn-edit');
+            if (editBtn) {
+                const id = editBtn.dataset.id;
+                const title = editBtn.dataset.title;
+                const description = editBtn.dataset.description;
+                const imgUrl = editBtn.dataset.imgurl;
+
+                document.getElementById('editTitle').value = title;
+                document.getElementById('editDescription').value = description;
+                document.getElementById('editForm').action = '/competition/manage/' + id;
+
+                const imgContainer = document.getElementById('currentImgContainer');
+                const currentImg = document.getElementById('currentImg');
+                if (imgUrl) {
+                    imgContainer.style.display = 'block';
+                    currentImg.src = imgUrl;
+                } else {
+                    imgContainer.style.display = 'none';
+                }
+
+                document.getElementById('editModal').classList.add('active');
+                return;
+            }
+
+            const deleteBtn = e.target.closest('.btn-delete');
+            if (deleteBtn) {
+                const id = deleteBtn.dataset.id;
+                const title = deleteBtn.dataset.title;
+
+                document.getElementById('deleteTitle').textContent = title;
+                document.getElementById('deleteForm').action = '/competition/manage/' + id;
+                document.getElementById('deleteModal').classList.add('active');
+                return;
+            }
+        });
+
+        function closeEditModal() {
+            document.getElementById('editModal').classList.remove('active');
         }
 
         function closeDeleteModal() {
@@ -547,6 +673,12 @@
         }
 
         // 点击遮罩关闭
+        document.getElementById('editModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeEditModal();
+            }
+        });
+
         document.getElementById('deleteModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 closeDeleteModal();
@@ -556,6 +688,7 @@
         // ESC 关闭
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
+                closeEditModal();
                 closeDeleteModal();
             }
         });

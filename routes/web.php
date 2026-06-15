@@ -95,5 +95,6 @@ Route::middleware('admin.auth')->group(function () {
     Route::get('competition/scenery', [CompetitionController::class, 'scenery'])->name('admin.competition.scenery');
     Route::post('competition/scenery', [CompetitionController::class, 'store'])->name('admin.competition.scenery.store');
     Route::get('competition/manage', [CompetitionController::class, 'manage'])->name('admin.competition.manage');
+    Route::put('competition/manage/{id}', [CompetitionController::class, 'update'])->name('admin.competition.update');
     Route::delete('competition/manage/{id}', [CompetitionController::class, 'destroy'])->name('admin.competition.destroy');
 });
