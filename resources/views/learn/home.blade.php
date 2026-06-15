@@ -6,7 +6,7 @@
         <div class="section-header">
             <h2 class="section-title">
                 <i class="fa-solid fa-trophy"></i>
-                比赛风光
+                荣誉墙
             </h2>
             <p class="section-desc">记录每一次精彩瞬间，展现团队风采</p>
         </div>

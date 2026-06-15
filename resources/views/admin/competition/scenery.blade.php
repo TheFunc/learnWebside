@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', '比赛风光')
+@section('title', '荣誉墙')
 
 @section('content')
     <style>
@@ -268,7 +268,7 @@
     <div class="form-container">
         <form action="{{ route('admin.competition.scenery.store') }}" method="POST" enctype="multipart/form-data" class="form-card" id="competitionForm">
             @csrf
-            <h2 class="form-title">添加比赛</h2>
+            <h2 class="form-title">添加荣誉</h2>
             
             @if($errors->any())
             <div class="error-alert">
@@ -289,12 +289,12 @@
             @endif
             
             <div class="form-group">
-                <label class="form-label">比赛标题 <span class="required">*</span></label>
+                <label class="form-label">荣誉标题 <span class="required">*</span></label>
                 <input type="text" name="Title" required class="form-input" placeholder="请输入比赛标题" value="{{ old('Title') }}">
             </div>
             
             <div class="form-group">
-                <label class="form-label">比赛图片 <span class="required">*</span></label>
+                <label class="form-label">荣誉图片 <span class="required">*</span></label>
                 <div class="upload-area" id="uploadArea" onclick="document.getElementById('imgFile').click()">
                     <i class="fa-solid fa-image"></i>
                     <span>点击或拖拽上传图片</span>
@@ -312,8 +312,8 @@
             </div>
             
             <div class="form-group">
-                <label class="form-label">比赛描述</label>
-                <textarea name="Description" class="form-textarea" placeholder="请输入比赛描述">{{ old('Description') }}</textarea>
+                <label class="form-label">荣誉描述</label>
+                <textarea name="Description" class="form-textarea" placeholder="请输入荣誉描述">{{ old('Description') }}</textarea>
             </div>
             
             <div class="form-actions">

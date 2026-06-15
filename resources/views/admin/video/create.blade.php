@@ -663,14 +663,14 @@
             <input type="hidden" id="groupID" value="{{ $groupID }}">
 
             <div class="form-group">
-                <label class="form-label">视频标题</label>
-                <input type="text" id="title" class="form-input" placeholder="请输入视频标题" required>
+                <label class="form-label">课程标题</label>
+                <input type="text" id="title" class="form-input" placeholder="请输入课程标题" required>
             </div>
 
             <div class="form-group">
-                <label class="form-label">视频类型</label>
+                <label class="form-label">项目名称</label>
                 <select id="typeID" class="form-select" required>
-                    <option value="">请选择视频类型</option>
+                    <option value="">请选择项目名称</option>
                     @foreach($types as $type)
                         <option value="{{ $type->TypeID }}">{{ $type->Type }}</option>
                     @endforeach

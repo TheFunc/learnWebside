@@ -382,12 +382,12 @@
         @endif
 
         <div class="card">
-            <h3 class="card-title">添加视频类型</h3>
+            <h3 class="card-title">添加项目名称</h3>
             <form action="{{ route('admin.video.type.store') }}" method="POST">
                 @csrf
                 <div class="form-group">
-                    <label class="form-label">视频类型</label>
-                    <input type="text" name="Type" required class="form-input" placeholder="请输入视频类型名称">
+                    <label class="form-label">项目名称</label>
+                    <input type="text" name="Type" required class="form-input" placeholder="请输入项目名称">
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary">
@@ -401,13 +401,13 @@
         </div>
 
         <div class="card">
-            <h3 class="card-title">视频类型列表</h3>
+            <h3 class="card-title">项目名称列表</h3>
             <div class="table-container">
                 <table class="data-table">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>类型名称</th>
+                            <th>项目名称</th>
                             <th>创建时间</th>
                             <th>操作</th>
                         </tr>

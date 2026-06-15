@@ -425,37 +425,13 @@
                         <i class="sub-icon fa-solid fa-book-open"></i>
                         <span>课程管理</span>
                     </a>
-                    <a href="{{ route('admin.video.manage') }}" {{ request()->routeIs('admin.video.manage') ? 'class=active' : '' }}>
-                        <i class="sub-icon fa-solid fa-film"></i>
-                        <span>视频管理</span>
-                    </a>
                     <a href="{{ route('admin.video.create') }}" {{ request()->routeIs('admin.video.create') ? 'class=active' : '' }}>
                         <i class="sub-icon fa-solid fa-plus-circle"></i>
                         <span>增加视频</span>
                     </a>
-                </div>
-            </div>
-
-            <div class="menu-item">
-                <div class="menu-header" onclick="toggleMenu(this)">
-                    <div class="menu-content">
-                        <i class="icon fa-solid fa-globe"></i>
-                        <span class="title">外部</span>
-                    </div>
-                    <span class="arrow">›</span>
-                </div>
-                <div class="sub-menu">
-                    <a href="{{ route('admin.external.course') }}" {{ request()->routeIs('admin.external.course') ? 'class=active' : '' }}>
-                        <i class="sub-icon fa-solid fa-book-open"></i>
-                        <span>外部课程</span>
-                    </a>
-                    <a href="{{ route('admin.external.manage') }}" {{ request()->routeIs('admin.external.manage') ? 'class=active' : '' }}>
-                        <i class="sub-icon fa-solid fa-cogs"></i>
-                        <span>外部管理</span>
-                    </a>
-                    <a href="{{ route('admin.external.create') }}" {{ request()->routeIs('admin.external.create') ? 'class=active' : '' }}>
-                        <i class="sub-icon fa-solid fa-plus-circle"></i>
-                        <span>添加外部</span>
+                    <a href="{{ route('admin.video.manage') }}" {{ request()->routeIs('admin.video.manage') ? 'class=active' : '' }}>
+                        <i class="sub-icon fa-solid fa-film"></i>
+                        <span>视频管理</span>
                     </a>
                 </div>
             </div>
@@ -495,11 +471,11 @@
                 <div class="sub-menu">
                     <a href="{{ route('admin.competition.scenery') }}" {{ request()->routeIs('admin.competition.scenery') ? 'class=active' : '' }}>
                         <i class="sub-icon fa-solid fa-image"></i>
-                        <span>比赛风光</span>
+                        <span>添加荣誉墙</span>
                     </a>
                     <a href="{{ route('admin.competition.manage') }}" {{ request()->routeIs('admin.competition.manage') ? 'class=active' : '' }}>
                         <i class="sub-icon fa-solid fa-cogs"></i>
-                        <span>管理风光</span>
+                        <span>管理荣誉墙</span>
                     </a>
                 </div>
             </div>
@@ -516,6 +492,30 @@
                     <a href="{{ route('admin.settings.index') }}" {{ request()->routeIs('admin.settings.index') ? 'class=active' : '' }}>
                         <i class="sub-icon fa-solid fa-cog"></i>
                         <span>系统配置</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <div class="menu-header" onclick="toggleMenu(this)">
+                    <div class="menu-content">
+                        <i class="icon fa-solid fa-globe"></i>
+                        <span class="title">外部</span>
+                    </div>
+                    <span class="arrow">›</span>
+                </div>
+                <div class="sub-menu">
+                    <a href="{{ route('admin.external.course') }}" {{ request()->routeIs('admin.external.course') ? 'class=active' : '' }}>
+                        <i class="sub-icon fa-solid fa-book-open"></i>
+                        <span>外部课程</span>
+                    </a>
+                    <a href="{{ route('admin.external.manage') }}" {{ request()->routeIs('admin.external.manage') ? 'class=active' : '' }}>
+                        <i class="sub-icon fa-solid fa-cogs"></i>
+                        <span>外部管理</span>
+                    </a>
+                    <a href="{{ route('admin.external.create') }}" {{ request()->routeIs('admin.external.create') ? 'class=active' : '' }}>
+                        <i class="sub-icon fa-solid fa-plus-circle"></i>
+                        <span>添加外部</span>
                     </a>
                 </div>
             </div>
