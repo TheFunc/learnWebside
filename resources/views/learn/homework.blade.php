@@ -30,8 +30,9 @@
         <div class="homework-card">
             <div class="card-header">
                 <div class="card-icon">
-                    <i class="fa-solid fa-file-lines"></i>
+                    <img src="{{ asset('images/1-cutout.png') }}" alt="作业图标">
                 </div>
+                <h3 class="card-title">{{ $hw->Title }}</h3>
                 <div class="difficulty">
                     @for($i = 1; $i <= 5; $i++)
                         @if($i <= $hw->Difficulty)
@@ -42,9 +43,6 @@
                     @endfor
                     <span class="difficulty-num">{{ $hw->Difficulty }}</span>
                 </div>
-            </div>
-            <div class="card-body">
-                <h3 class="card-title">{{ $hw->Title }}</h3>
             </div>
             <div class="card-footer">
                 <a href="{{ route('learn.homework.download', ['id' => $hw->id]) }}" class="btn btn-download">
@@ -147,7 +145,6 @@
         .homework-hero .hero-icon {
             width: 48px;
             height: 48px;
-            margin-bottom: 12px;
         }
 
         .homework-hero .hero-icon i {
@@ -369,27 +366,47 @@
     .card-header {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        gap: 12px;
         margin-bottom: 16px;
     }
 
     .card-icon {
         width: 44px;
         height: 44px;
-        background: linear-gradient(135deg, var(--blue-50), var(--blue-100));
+        flex-shrink: 0;
         border-radius: 12px;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--blue-500);
-        font-size: 1.1rem;
+        overflow: hidden;
         transition: all 0.3s ease;
     }
 
-    .homework-card:hover .card-icon {
-        background: linear-gradient(135deg, var(--blue-500), var(--accent-cyan));
-        color: white;
-        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    .card-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .card-header .card-title {
+        flex: 1;
+        margin: 0;
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        line-height: 1.5;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .card-header .difficulty {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        gap: 4px;
     }
 
     .difficulty {

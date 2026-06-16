@@ -26,7 +26,7 @@ class LearnController extends Controller
     public function index(Request $request)
     {
         $homepageVideo = $this->getHomepageVideo();
-        $competitions = Competition::latest()->paginate(8);
+        $competitions = Competition::oldest()->paginate(8);
 
         return view('learn.home', compact('homepageVideo', 'competitions'));
     }
