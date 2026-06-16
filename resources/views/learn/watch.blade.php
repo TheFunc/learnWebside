@@ -37,13 +37,11 @@
                      data-index="{{ $index }}"
                      data-url="{{ route('learn.video.stream', ['path' => $video->Path]) }}"
                      data-title="{{ $video->display_name }}"
-                     data-desc="{{ $video->Description }}"
                      data-cover="{{ $video->cover ? asset('storage/' . $video->cover->path) : '' }}"
                      onclick="switchVideo(this)">
                     <div class="item-index">{{ $index + 1 }}</div>
                     <div class="item-info">
                         <div class="item-title">{{ $video->display_name }}</div>
-                        <div class="item-desc">{{ Str::limit($video->Description, 30) }}</div>
                     </div>
                     <div class="item-playing">
                         <i class="fa-solid fa-volume-high"></i>
@@ -175,9 +173,6 @@
             font-size: 0.85rem;
         }
 
-        .item-desc {
-            font-size: 0.7rem;
-        }
     }
 
     /* 播放器区域 */
@@ -308,10 +303,6 @@
         color: white;
     }
 
-    .playlist-item.active .item-desc {
-        color: rgba(255, 255, 255, 0.8);
-    }
-
     .item-index {
         width: 32px;
         height: 32px;
@@ -344,14 +335,6 @@
 
     .playlist-item.active .item-title {
         color: white;
-    }
-
-    .item-desc {
-        font-size: 0.75rem;
-        color: var(--text-muted);
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
     }
 
     .item-playing {
@@ -518,7 +501,6 @@ document.addEventListener('DOMContentLoaded', function() {
     window.switchVideo = function(element) {
         const url = element.dataset.url;
         const title = element.dataset.title;
-        const desc = element.dataset.desc;
         const cover = element.dataset.cover;
 
         // 更新激活状态
@@ -527,7 +509,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 更新视频信息
         document.getElementById('currentTitle').textContent = title;
-        document.getElementById('currentDesc').textContent = desc;
 
         // 切换视频
         initPlayer(url, cover);

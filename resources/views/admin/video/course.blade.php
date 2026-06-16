@@ -406,7 +406,7 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>#</th>
                             <th>项目名称</th>
                             <th>创建时间</th>
                             <th>操作</th>
@@ -415,7 +415,7 @@
                     <tbody>
                         @forelse($types as $type)
                             <tr>
-                                <td>{{ $type->TypeID }}</td>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $type->Type }}</td>
                                 <td>{{ $type->created_at->format('Y-m-d H:i:s') }}</td>
                                 <td>

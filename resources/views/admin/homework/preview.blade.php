@@ -28,7 +28,7 @@
                         <thead>
                             <tr style="background: #f8fafc;">
                                 <th style="padding: 12px 16px; text-align: left; font-size: 14px; font-weight: 600; color: #374151; border-bottom: 2px solid #e2e8f0;">
-                                    ID
+                                    #
                                 </th>
                                 <th style="padding: 12px 16px; text-align: left; font-size: 14px; font-weight: 600; color: #374151; border-bottom: 2px solid #e2e8f0;">
                                     <i class="fa-solid fa-clock" style="margin-right: 8px;"></i>上传时间
@@ -48,7 +48,7 @@
                             @foreach($homeworks as $homework)
                                 <tr style="border-bottom: 1px solid #e2e8f0; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
                                     <td style="padding: 12px 16px; font-size: 14px; color: #6b7280;">
-                                        {{ $homework->id }}
+                                        {{ $loop->iteration }}
                                     </td>
                                     <td style="padding: 12px 16px; font-size: 14px; color: #6b7280;">
                                         {{ $homework->created_at->format('Y-m-d H:i') }}

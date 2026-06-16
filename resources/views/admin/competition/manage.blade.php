@@ -71,14 +71,13 @@
             background: #e2e8f0;
         }
         .table-container {
-            overflow-x: hidden;
+            overflow-x: auto;
             background: #fff;
             border-radius: 16px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             border: 1px solid #e2e8f0;
             margin-bottom: 20px;
             width: 100%;
-            max-width: 1200px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -105,6 +104,39 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
+        .data-table td:nth-child(1),
+        .data-table th:nth-child(1) {
+            text-align: center;
+            width: 50px;
+            min-width: 50px;
+        }
+        .data-table td:nth-child(2),
+        .data-table th:nth-child(2) {
+            width: 180px;
+            min-width: 140px;
+        }
+        .data-table td:nth-child(3),
+        .data-table th:nth-child(3) {
+            width: 180px;
+            min-width: 120px;
+        }
+        .data-table td:nth-child(4),
+        .data-table th:nth-child(4) {
+            width: 250px;
+            min-width: 150px;
+        }
+        .data-table td:nth-child(5),
+        .data-table th:nth-child(5),
+        .data-table td:nth-child(6),
+        .data-table th:nth-child(6) {
+            width: 150px;
+            min-width: 120px;
+        }
+        .data-table td:nth-child(7),
+        .data-table th:nth-child(7) {
+            width: 200px;
+            min-width: 170px;
+        }
         .data-table td {
             padding: 16px 20px;
             font-size: 14px;
@@ -112,6 +144,10 @@
             border-bottom: 1px solid #f1f5f9;
             white-space: nowrap;
             transition: color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            min-width: 80px;
+        }
+        .data-table td:last-child {
+            min-width: 170px;
         }
         .data-table tbody tr {
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -138,7 +174,8 @@
         }
         .thumb-img {
             width: 160px;
-            height: 100px;
+            max-width: 160px;
+            height: 90px;
             object-fit: cover;
             border-radius: 8px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
@@ -481,7 +518,7 @@
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>#</th>
                         <th>封面</th>
                         <th>标题</th>
                         <th>描述</th>
@@ -493,7 +530,7 @@
                 <tbody>
                     @forelse($competitions as $item)
                     <tr>
-                        <td>{{ $item->id }}</td>
+                        <td>{{ $loop->iteration }}</td>
                         <td>
                             @if($item->ImgUrl)
                                 <img src="{{ $item->ImgUrl }}" alt="封面" class="thumb-img">

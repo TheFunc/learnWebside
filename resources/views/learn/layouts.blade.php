@@ -943,32 +943,32 @@
                 <img src="{{ asset('images/jmjx-logo.png') }}" alt="Logo" class="logo-img">
             </div>
 
-            <!-- 中间：标语 + 导航栏 -->
-            <div class="flex items-center header-slogan-nav">
-                <span class="slogan-text">家校情怀 技能报国</span>
-                <nav class="nav-container">
-                    <a href="{{ route('learn.index') }}" 
-                       class="nav-item {{ request()->routeIs('learn.index') ? 'active' : '' }}">
-                        <i class="fa-solid fa-house"></i>首页
-                    </a>
-                    <a href="{{ route('learn.courses') }}" 
-                       class="nav-item {{ request()->routeIs('learn.courses') ? 'active' : '' }}">
-                        <i class="fa-solid fa-graduation-cap"></i>课程学习
-                    </a>
-                    <a href="{{ route('learn.external') }}" 
-                       class="nav-item {{ request()->routeIs('learn.external') ? 'active' : '' }}">
-                        <i class="fa-solid fa-link"></i>外部学习
-                    </a>
-                    <a href="{{ route('learn.homework') }}" 
-                       class="nav-item {{ request()->routeIs('learn.homework') ? 'active' : '' }}">
-                        <i class="fa-solid fa-book-open"></i>作业
-                    </a>
-                    <a href="{{ route('learn.navigation') }}" 
-                       class="nav-item {{ request()->routeIs('learn.navigation') ? 'active' : '' }}">
-                        <i class="fa-solid fa-compass"></i>网站导航
-                    </a>
-                </nav>
-            </div>
+            <!-- 标语：在Logo和导航栏之间 -->
+            <span class="slogan-text">家校情怀 技能报国</span>
+
+            <!-- 导航栏 -->
+            <nav class="nav-container">
+                <a href="{{ route('learn.index') }}" 
+                   class="nav-item {{ request()->routeIs('learn.index') ? 'active' : '' }}">
+                    <i class="fa-solid fa-house"></i>首页
+                </a>
+                <a href="{{ route('learn.courses') }}" 
+                   class="nav-item {{ request()->routeIs('learn.courses') ? 'active' : '' }}">
+                    <i class="fa-solid fa-graduation-cap"></i>课程学习
+                </a>
+                <a href="{{ route('learn.external') }}" 
+                   class="nav-item {{ request()->routeIs('learn.external') ? 'active' : '' }}">
+                    <i class="fa-solid fa-link"></i>外部学习
+                </a>
+                <a href="{{ route('learn.homework') }}" 
+                   class="nav-item {{ request()->routeIs('learn.homework') ? 'active' : '' }}">
+                    <i class="fa-solid fa-book-open"></i>作业
+                </a>
+                <a href="{{ route('learn.navigation') }}" 
+                   class="nav-item {{ request()->routeIs('learn.navigation') ? 'active' : '' }}">
+                    <i class="fa-solid fa-compass"></i>网站导航
+                </a>
+            </nav>
 
             <!-- 最右侧：可折叠用户下拉菜单 + 汉堡菜单 -->
             <div class="user-dropdown" id="userDropdown">
