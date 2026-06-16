@@ -106,7 +106,6 @@
         display: grid;
         grid-template-columns: 1fr 340px;
         gap: 24px;
-        align-items: start;
     }
 
     @media (max-width: 1024px) {
@@ -115,11 +114,15 @@
         }
 
         .playlist-section {
-            max-height: 400px;
+            max-height: 45vh;
         }
     }
 
     @media (max-width: 768px) {
+        .watch-page {
+            max-width: 100%;
+        }
+
         .watch-header {
             gap: 12px;
             margin-bottom: 16px;
@@ -150,10 +153,6 @@
             font-size: 0.85rem;
         }
 
-        .playlist-section {
-            max-height: 300px;
-        }
-
         .playlist-header {
             padding: 12px 16px;
             font-size: 0.9rem;
@@ -173,6 +172,48 @@
             font-size: 0.85rem;
         }
 
+        .watch-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin: 0 calc(-16px);
+            width: calc(100% + 32px);
+        }
+
+        .player-section {
+            flex-shrink: 0;
+            border-radius: 0;
+            border-left: none;
+            border-right: none;
+            border-top: none;
+            box-shadow: none;
+        }
+
+        .playlist-section {
+            flex: 0 0 auto;
+            min-height: 0;
+            border-radius: 0;
+            border-left: none;
+            border-right: none;
+            border-bottom: none;
+            box-shadow: none;
+        }
+
+        .playlist-list {
+            flex: 0 0 auto;
+            min-height: 0;
+        }
+
+        .video-info {
+            border-top: 1px solid var(--border-color);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .watch-layout {
+            margin: 0 calc(-12px);
+            width: calc(100% + 24px);
+        }
     }
 
     /* 播放器区域 */
@@ -226,9 +267,9 @@
         border: 1px solid var(--border-color);
         overflow: hidden;
         box-shadow: var(--shadow-md);
-        max-height: calc(100vh - 180px);
         display: flex;
         flex-direction: column;
+        min-height: 0;
     }
 
     .playlist-header {
@@ -257,6 +298,7 @@
 
     .playlist-list {
         flex: 1;
+        min-height: 0;
         overflow-y: auto;
         padding: 8px;
     }
@@ -389,6 +431,7 @@
     .dplayer-container .dplayer-fullscreen-in .dplayer-fullscreen-icon {
         color: white;
     }
+
 </style>
 
 {{-- DPlayer JS --}}
