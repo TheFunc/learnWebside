@@ -185,9 +185,11 @@
 
         .playlist-section {
             margin: 0;
+            width: 100%;
         }
 
         .playlist-list {
+            width: 100%;
             flex: 0 0 auto;
             min-height: 0;
         }
