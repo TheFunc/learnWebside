@@ -106,6 +106,7 @@
         display: grid;
         grid-template-columns: 1fr 340px;
         gap: 24px;
+        align-items: start;
     }
 
     @media (max-width: 1024px) {
@@ -176,43 +177,25 @@
             display: flex;
             flex-direction: column;
             gap: 0;
-            margin: 0 calc(-16px);
-            width: calc(100% + 32px);
         }
 
         .player-section {
-            flex-shrink: 0;
-            border-radius: 0;
-            border-left: none;
-            border-right: none;
-            border-top: none;
-            box-shadow: none;
+            margin: 0;
         }
 
         .playlist-section {
-            flex: 0 0 auto;
-            min-height: 0;
-            border-radius: 0;
-            border-left: none;
-            border-right: none;
-            border-bottom: none;
-            box-shadow: none;
+            margin: 0;
         }
 
         .playlist-list {
             flex: 0 0 auto;
             min-height: 0;
         }
-
-        .video-info {
-            border-top: 1px solid var(--border-color);
-        }
     }
 
     @media (max-width: 480px) {
         .watch-layout {
-            margin: 0 calc(-12px);
-            width: calc(100% + 24px);
+            width: 100%;
         }
     }
 
@@ -437,8 +420,28 @@
 {{-- DPlayer JS --}}
 <script src="{{ asset('js/DPlayer.min.js') }}"></script>
 
-<script>
+    <script>
+// 同步播放列表高度与播放器区域高度一致
+function syncPlaylistHeight() {
+    const playerSection = document.querySelector('.player-section');
+    const playlistSection = document.querySelector('.playlist-section');
+    if (!playerSection || !playlistSection) return;
+
+    // 桌面端才同步高度（mobile 布局下播放列表在下方）
+    if (window.innerWidth > 1024) {
+        playlistSection.style.height = playerSection.offsetHeight + 'px';
+    } else {
+        playlistSection.style.height = '';
+    }
+}
+
+// 窗口大小变化时重新同步
+window.addEventListener('resize', syncPlaylistHeight);
+
 document.addEventListener('DOMContentLoaded', function() {
+    // 初始同步播放列表高度
+    syncPlaylistHeight();
+
     const videoList = document.querySelectorAll('.playlist-item');
     let currentPlayer = null;
     let watchTimer = null;
@@ -510,6 +513,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         currentPlayer = new DPlayer(options);
 
+        // DPlayer 初始化后同步高度
+        requestAnimationFrame(function() {
+            requestAnimationFrame(syncPlaylistHeight);
+        });
+
         // 监听视频播放结束，自动播放下一个
         currentPlayer.on('ended', function() {
             const currentIndex = Array.from(videoList).findIndex(item => item.classList.contains('active'));
@@ -558,6 +566,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 滚动到可视区域
         element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+        // 切换视频后重新同步高度
+        requestAnimationFrame(syncPlaylistHeight);
     };
 });
 </script>
