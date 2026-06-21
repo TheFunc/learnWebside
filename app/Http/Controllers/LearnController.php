@@ -90,9 +90,9 @@ class LearnController extends Controller
                 $video->display_name = preg_replace('/^\d+_/', '', $filename);
                 return $video;
             })
-            ->sortBy(function ($video) {
-                return basename($video->Path);
-            }, SORT_NATURAL)
+            ->sort(function ($a, $b) {
+                return strnatcasecmp(basename($a->Path), basename($b->Path));
+            })
             ->values();
 
         if ($videos->isEmpty()) {
