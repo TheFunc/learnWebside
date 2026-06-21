@@ -89,7 +89,11 @@ class LearnController extends Controller
                 $filename = basename($video->Path);
                 $video->display_name = preg_replace('/^\d+_/', '', $filename);
                 return $video;
-            });
+            })
+            ->sortBy(function ($video) {
+                return basename($video->Path);
+            }, SORT_NATURAL)
+            ->values();
 
         if ($videos->isEmpty()) {
             abort(404, '视频组不存在');
