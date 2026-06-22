@@ -91,7 +91,7 @@ class LearnController extends Controller
                 return $video;
             })
             ->sort(function ($a, $b) {
-                return strnatcasecmp(basename($a->Path), basename($b->Path));
+                return strnatcasecmp($a->display_name, $b->display_name);
             })
             ->values();
 
