@@ -29,6 +29,9 @@
         .sticky-actions .form-actions {
             margin-top: 0;
             margin-left: auto;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            justify-content: flex-end;
         }
 
         /* 整体进度条 */
@@ -74,6 +77,242 @@
         .btn-primary:disabled:hover {
             transform: none;
             box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        /* 上传结果弹窗 */
+        .upload-result-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .upload-result-overlay.active {
+            display: flex;
+        }
+
+        .upload-result-modal {
+            background: #fff;
+            border-radius: 20px;
+            width: 92%;
+            max-width: 720px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border: 1px solid #e2e8f0;
+            animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .upload-result-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            border-bottom: 1px solid #e2e8f0;
+            flex-shrink: 0;
+        }
+
+        .upload-result-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 0;
+        }
+
+        .upload-result-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #94a3b8;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .upload-result-close:hover {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .upload-result-body {
+            padding: 20px 24px;
+            overflow-y: auto;
+            flex: 1;
+            min-height: 100px;
+        }
+
+        .upload-result-body::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .upload-result-body::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 3px;
+        }
+
+        .upload-result-body::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+
+        .upload-result-body::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .upload-result-footer {
+            display: flex;
+            justify-content: flex-end;
+            padding: 16px 24px;
+            border-top: 1px solid #e2e8f0;
+            flex-shrink: 0;
+        }
+
+        .upload-result-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: #94a3b8;
+        }
+
+        .upload-result-empty i {
+            font-size: 48px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .upload-result-empty p {
+            font-size: 15px;
+            margin: 0;
+        }
+
+        .upload-result-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: #f8fafc;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .upload-result-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .upload-result-item-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .upload-result-item-icon.success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .upload-result-item-icon.error {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .upload-result-item-icon.pending {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+        }
+
+        .upload-result-item-progress {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .upload-result-item-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #334155;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .upload-result-item-status {
+            font-size: 12px;
+            margin-top: 2px;
+        }
+
+        .upload-result-item-pbar {
+            margin-top: 6px;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .upload-result-item-pbar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .upload-result-item-pbar-fill.done {
+            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+        }
+
+        .upload-result-item-status.success {
+            color: #10b981;
+        }
+
+        .upload-result-item-status.error {
+            color: #ef4444;
+        }
+
+        .upload-result-item-status.pending {
+            color: #f59e0b;
+        }
+
+        .upload-result-summary {
+            display: flex;
+            gap: 20px;
+            padding: 16px 20px;
+            background: #f0f9ff;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            border: 1px solid #bae6fd;
+        }
+
+        .upload-result-summary-item {
+            flex: 1;
+            text-align: center;
+        }
+
+        .upload-result-summary-value {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0284c7;
+        }
+
+        .upload-result-summary-label {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 4px;
         }
 
         /* 提示弹窗 */
@@ -648,6 +887,9 @@
                 </div>
             </div>
             <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="openUploadResult()">
+                    <i class="fa-solid fa-list-check"></i> 上传信息
+                </button>
                 <button type="button" class="btn btn-secondary" onclick="resetForm()">
                     <i class="fa-solid fa-rotate-left"></i> 重置
                 </button>
@@ -707,8 +949,6 @@
             </div>
             
             <input type="file" id="videoFiles" class="hidden" accept="video/*" multiple>
-            
-            <div class="file-list" id="videoFileList"></div>
         </div>
     </div>
 
@@ -735,6 +975,27 @@
                 </button>
                 <button class="btn btn-primary" onclick="goToVideoManage()">
                     <i class="fa-solid fa-list"></i> 查看列表
+                </button>
+            </div>
+        </div>
+    </div>
+
+    {{-- 上传结果弹窗 --}}
+    <div class="upload-result-overlay" id="uploadResultOverlay">
+        <div class="upload-result-modal">
+            <div class="upload-result-header">
+                <h3><i class="fa-solid fa-list-check"></i> 上传信息</h3>
+                <button class="upload-result-close" onclick="closeUploadResult()">&times;</button>
+            </div>
+            <div class="upload-result-body" id="uploadResultBody">
+                <div class="upload-result-empty">
+                    <i class="fa-regular fa-file-video"></i>
+                    <p>暂无上传记录</p>
+                </div>
+            </div>
+            <div class="upload-result-footer">
+                <button class="btn btn-secondary" onclick="closeUploadResult()">
+                    <i class="fa-solid fa-xmark"></i> 关闭
                 </button>
             </div>
         </div>
@@ -894,30 +1155,36 @@
         }
 
         function uploadVideo(file) {
-            const fileList = document.getElementById('videoFileList');
             const fileId = 'video-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
             
             totalVideos++;
             uploadingVideos[fileId] = true;
             updateOverallProgress();
             
-            fileList.innerHTML += `
-                <div class="file-item" id="${fileId}">
-                    <div class="file-icon video">
-                        <i class="fa-solid fa-video"></i>
+            // 先确保模态框已打开
+            const overlay = document.getElementById('uploadResultOverlay');
+            if (!overlay.classList.contains('active')) {
+                overlay.classList.add('active');
+            }
+
+            // 如果模态框内容当前是空状态，先清空
+            const body = document.getElementById('uploadResultBody');
+            const emptyEl = body.querySelector('.upload-result-empty');
+            if (emptyEl) {
+                body.innerHTML = '';
+            }
+
+            body.innerHTML += `
+                <div class="upload-result-item" id="${fileId}">
+                    <div class="upload-result-item-icon pending" id="${fileId}-icon">
+                        <i class="fa-solid fa-spinner fa-spin"></i>
                     </div>
-                    <div class="file-info">
-                        <div class="file-name">${file.name}</div>
-                        <div class="file-size">${formatFileSize(file.size)}</div>
-                        <div class="file-progress">
-                            <div class="file-progress-bar" style="width: 0%"></div>
+                    <div class="upload-result-item-progress">
+                        <div class="upload-result-item-name">${file.name}</div>
+                        <div class="upload-result-item-status pending">上传中... <span id="${fileId}-percent">0%</span></div>
+                        <div class="upload-result-item-pbar">
+                            <div class="upload-result-item-pbar-fill" id="${fileId}-barfill" style="width: 0%"></div>
                         </div>
-                        <div class="file-status uploading">上传中...</div>
-                    </div>
-                    <div class="file-actions">
-                        <button class="btn btn-danger" onclick="cancelUpload('${fileId}')">
-                            <i class="fa-solid fa-x"></i>
-                        </button>
                     </div>
                 </div>
             `;
@@ -933,8 +1200,11 @@
 
             xhr.upload.addEventListener('progress', function(e) {
                 if (e.lengthComputable) {
-                    const percent = (e.loaded / e.total) * 100;
-                    document.querySelector('#' + fileId + ' .file-progress-bar').style.width = percent + '%';
+                    const percent = Math.round((e.loaded / e.total) * 100);
+                    const percentEl = document.getElementById(fileId + '-percent');
+                    if (percentEl) percentEl.textContent = percent + '%';
+                    const barEl = document.getElementById(fileId + '-barfill');
+                    if (barEl) barEl.style.width = percent + '%';
                 }
             });
 
@@ -953,19 +1223,34 @@
                     completedVideos++;
                     updateOverallProgress();
 
-                    document.querySelector('#' + fileId + ' .file-status').textContent = '上传成功';
-                    document.querySelector('#' + fileId + ' .file-status').className = 'file-status success';
-                    document.querySelector('#' + fileId + ' .file-icon').innerHTML = '<i class="fa-solid fa-check"></i>';
-                    document.querySelector('#' + fileId + ' .file-actions').innerHTML = `
-                        <button class="btn btn-danger" onclick="removeVideo('${fileId}', '${response.path}')">
-                            <i class="fa-solid fa-trash"></i> 删除
-                        </button>
-                    `;
+                    const iconEl = document.getElementById(fileId + '-icon');
+                    if (iconEl) {
+                        iconEl.className = 'upload-result-item-icon success';
+                        iconEl.innerHTML = '<i class="fa-solid fa-check"></i>';
+                    }
+                    const statusEl = document.querySelector('#' + fileId + ' .upload-result-item-status');
+                    if (statusEl) {
+                        statusEl.textContent = '上传成功';
+                        statusEl.className = 'upload-result-item-status success';
+                    }
                 } else {
                     totalVideos--;
                     updateOverallProgress();
-                    document.querySelector('#' + fileId + ' .file-status').textContent = '上传失败';
-                    document.querySelector('#' + fileId + ' .file-status').className = 'file-status error';
+                    let errMsg = '上传失败';
+                    try {
+                        const errResp = JSON.parse(xhr.responseText);
+                        if (errResp.message) errMsg = errResp.message;
+                    } catch(e) {}
+                    const iconEl = document.getElementById(fileId + '-icon');
+                    if (iconEl) {
+                        iconEl.className = 'upload-result-item-icon error';
+                        iconEl.innerHTML = '<i class="fa-solid fa-x"></i>';
+                    }
+                    const statusEl = document.querySelector('#' + fileId + ' .upload-result-item-status');
+                    if (statusEl) {
+                        statusEl.textContent = errMsg;
+                        statusEl.className = 'upload-result-item-status error';
+                    }
                 }
             });
 
@@ -973,8 +1258,21 @@
                 delete uploadingVideos[fileId];
                 totalVideos--;
                 updateOverallProgress();
-                document.querySelector('#' + fileId + ' .file-status').textContent = '上传失败';
-                document.querySelector('#' + fileId + ' .file-status').className = 'file-status error';
+                let errMsg = '网络错误，上传失败';
+                try {
+                    const errResp = JSON.parse(xhr.responseText);
+                    if (errResp.message) errMsg = errResp.message;
+                } catch(e) {}
+                const iconEl = document.getElementById(fileId + '-icon');
+                if (iconEl) {
+                    iconEl.className = 'upload-result-item-icon error';
+                    iconEl.innerHTML = '<i class="fa-solid fa-x"></i>';
+                }
+                const statusEl = document.querySelector('#' + fileId + ' .upload-result-item-status');
+                if (statusEl) {
+                    statusEl.textContent = errMsg;
+                    statusEl.className = 'upload-result-item-status error';
+                }
             });
 
             xhr.send(formData);
@@ -1055,6 +1353,12 @@
             document.getElementById('toastOverlay').classList.remove('active');
         }
 
+        function restoreSaveBtn() {
+            const btn = document.getElementById('saveBtn');
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-save"></i> 保存全部';
+        }
+
         function saveAll() {
             const title = document.getElementById('title').value.trim();
             const typeID = document.getElementById('typeID').value;
@@ -1063,16 +1367,19 @@
 
             if (!title) {
                 alert('请输入视频标题');
+                restoreSaveBtn();
                 return;
             }
 
             if (!typeID) {
                 alert('请选择视频类型');
+                restoreSaveBtn();
                 return;
             }
 
             if (uploadedVideos.length === 0) {
                 alert('请至少上传一个视频');
+                restoreSaveBtn();
                 return;
             }
 
@@ -1096,12 +1403,62 @@
                     showSuccessModal();
                 } else {
                     alert('保存失败，请重试');
+                    restoreSaveBtn();
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
                 alert('保存失败，请重试');
+                restoreSaveBtn();
             });
+        }
+
+        function renderUploadResult() {
+            const body = document.getElementById('uploadResultBody');
+            const hasCover = coverPath !== null && coverFilename !== null;
+            const hasVideos = uploadedVideos.length > 0;
+
+            if (!hasCover && !hasVideos) {
+                body.innerHTML = `
+                    <div class="upload-result-empty">
+                        <i class="fa-regular fa-file-video"></i>
+                        <p>暂无上传记录</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            html += '<div class="upload-result-summary">';
+            html += '<div class="upload-result-summary-item"><div class="upload-result-summary-value">' + (hasCover ? '1' : '0') + '</div><div class="upload-result-summary-label">封面上传</div></div>';
+            html += '<div class="upload-result-summary-item"><div class="upload-result-summary-value">' + uploadedVideos.length + '</div><div class="upload-result-summary-label">视频数量</div></div>';
+            html += '</div>';
+
+            if (hasCover) {
+                html += '<div class="upload-result-item">';
+                html += '<div class="upload-result-item-icon success"><i class="fa-solid fa-check"></i></div>';
+                html += '<div class="upload-result-item-progress"><div class="upload-result-item-name">' + coverFilename + '</div><div class="upload-result-item-status success">封面 — 上传成功</div></div>';
+                html += '</div>';
+            }
+
+            for (let i = 0; i < uploadedVideos.length; i++) {
+                const v = uploadedVideos[i];
+                const displayName = v.originalName || v.filename;
+                html += '<div class="upload-result-item">';
+                html += '<div class="upload-result-item-icon success"><i class="fa-solid fa-check"></i></div>';
+                html += '<div class="upload-result-item-progress"><div class="upload-result-item-name">' + displayName + '</div><div class="upload-result-item-status success">视频 — 上传成功</div></div>';
+                html += '</div>';
+            }
+
+            body.innerHTML = html;
+        }
+
+        function openUploadResult() {
+            document.getElementById('uploadResultOverlay').classList.add('active');
+        }
+
+        function closeUploadResult() {
+            document.getElementById('uploadResultOverlay').classList.remove('active');
         }
 
         function resetForm() {
@@ -1115,7 +1472,13 @@
             completedVideos = 0;
             uploadingVideos = {};
             document.getElementById('coverPreview').innerHTML = '';
-            document.getElementById('videoFileList').innerHTML = '';
+            // 同时清空模态框中的上传记录
+            document.getElementById('uploadResultBody').innerHTML = `
+                <div class="upload-result-empty">
+                    <i class="fa-regular fa-file-video"></i>
+                    <p>暂无上传记录</p>
+                </div>
+            `;
             updateOverallProgress();
         }
 
